@@ -1,0 +1,182 @@
+@charset "UTF-8";
+/* очищение всех отсупов и границ */
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;700&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+/* измена подсчета ширины блока */
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+/* убираем линии обводки в некоторых браузерах */
+:focus,
+:active {
+  outline: none;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+/* делаем теги блочными */
+nav,
+footer,
+header,
+aside {
+  display: block;
+}
+
+/*уравниваем поведение шрифтов и элементов для разных браузеров и запрет самовольного увеличение шрифта (например на айфонах)*/
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  line-height: 1;
+  font-size: 14px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* наследуем семейства шрифта, т.к. по умолчанию они не наследуют*/
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+/*убираем некоторые особенности в некоторых браузерах*/
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+}
+
+ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+/*обнуляем заголовки*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: 400;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+}
+
+.menuHorizontal > ul {
+  display: flex;
+}
+.menuHorizontal > ul > li {
+  margin-right: 20px;
+}
+.menuHorizontal > ul > li:last-child {
+  margin-right: 0px;
+}
+
+header {
+  font-weight: 700;
+  background-color: #19191c;
+  color: #f3f3f3;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%;
+}
+header__title {
+  font-size: 20px;
+  font-weight: 400;
+  color: white;
+  word-spacing: 4px;
+}
+.content {
+  margin: 50px 10%;
+  display: flex;
+  justify-content: space-between;
+}
+.content__wheel {
+  margin: 0 auto;
+}
+.content__wheel #wheelBalance {
+  border: 1px solid #000;
+}
+.content__menu {
+  width: 250px;
+}
+
+.menuWheel__block {
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 4px;
+}
+.menuWheel__item {
+  margin: 4px 0px;
+}
+
+.sectorInfo {
+  display: flex;
+  justify-content: space-between;
+}
+.sectorInfo__name::before {
+  content: "";
+  background: #ed61ca left no-repeat;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: top;
+  margin-bottom: 3px;
+}
+.sectorInfo__score {
+  color: #8d9496;
+}
+
+.btnMain {
+  background-color: #f3f3f3;
+  text-transform: uppercase;
+  color: #19191c;
+  font-weight: 700px;
+  border: 1px solid #000;
+  border-radius: 3px;
+  display: inline-block;
+  padding: 5px 8px;
+}

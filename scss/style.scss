@@ -1,0 +1,120 @@
+@import "_nullstyle";
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;700&display=swap');
+
+// colors
+$clr_black: #19191c;
+$clr_grey: #f3f3f3;
+$clr_greyDark: #8d9496;
+$clr_pinkLight: #ed61ca;
+
+// margin
+$mg_main: 10%;
+
+* {
+    padding: 0;
+    margin: 0;    
+}
+
+body {
+    font-family: 'Manrope', sans-serif;
+}
+
+.menuHorizontal{
+    >ul{
+        display: flex;
+        >li {
+            margin-right: 20px;
+            &:last-child {
+                margin-right: 0px;
+            }
+        }
+    }
+}
+
+header {
+    font-weight: 700;
+    background-color: $clr_black;
+    color: $clr_grey;
+    width: 100%; 
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 $mg_main;
+
+    &__title {
+        font-size: 20px;
+        font-weight: 400;
+        color: white;
+        word-spacing: 4px;
+    }
+    &__menu {
+
+    }
+}
+.content {
+    margin: 50px $mg_main;
+    display: flex;
+    justify-content: space-between;
+
+    &__wheel {
+        margin: 0 auto;
+        #wheelBalance{
+            //width: 500px;
+            //height: 500px;
+            border: 1px solid #000;
+            
+        }
+    }
+
+    &__menu {        
+        width: 250px;
+    }    
+}
+
+
+
+.menuWheel {
+    &__block {
+        padding: 10px;
+        border: 1px solid #000;
+        border-radius: 4px;
+    }
+    &__item {
+        //padding: 3px 0;
+        margin: 4px 0px;
+    }
+}
+.sectorInfo {
+    display: flex;
+    justify-content: space-between;
+
+    &__name {               
+        &::before{
+            content: "";            
+            background: $clr_pinkLight left no-repeat;              
+            height: 16px;
+            width: 16px;            
+            border-radius: 50%;
+            display: inline-block;            
+            margin-right: 8px;                
+            vertical-align: top;   
+            margin-bottom: 3px;       
+        }
+    }
+    &__score {
+        color: $clr_greyDark;
+    }
+}
+.btnMain {
+    background-color: $clr_grey;
+    text-transform: uppercase;
+    color: $clr_black;
+    font-weight: 700px;
+    border: 1px solid #000;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 5px 8px;    
+}
+

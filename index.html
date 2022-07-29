@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifa balance</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header__title">Инструменты личной эффективности</div>
+        <div class="header__menu menuHorizontal">
+            <ul>
+                <li>Колесо баланса</li>
+                <li>SMART-цели</li>
+                <li>Карта желаний</li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="content__wheel">
+            <canvas id="wheelBalance" width="500px" height="500px"></canvas>
+        </div>
+        <div class="content__menu">
+            <div class="menuWheel">
+                <div class="menuWheel__block">
+                    <ul>
+                        <li>
+                            <div class="menuWheel__item sectorInfo">
+                                <div class="sectorInfo__name">Духовность</div>
+                                <div class="sectorInfo__score">9/10</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menuWheel__item sectorInfo">
+                                <div class="sectorInfo__name">Семья</div>
+                                <div class="sectorInfo__score">10/10</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menuWheel__item sectorInfo">
+                                <div class="sectorInfo__name">Любовь Любовь Любовь Любовь</div>
+                                <div class="sectorInfo__score">10/10</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="btnAdd" class="menuWheel__item btnMain"><p>+Добавить</p></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/script.js"></script>
+</body>
+
+</html>
