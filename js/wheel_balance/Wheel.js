@@ -4,21 +4,20 @@ export class BalanceWheel {
     name = "fef";
     numberOfSectors; // количество делений или сфер
     maxScore; // максимальный балл сектора / сферы
-    sectors = Array();
+    sectors;
 
     defaultSectors = [
-        new Sector("love", "#8d9496", this.maxScore),
-        new Sector("family", "#8d9496", this.maxScore),
-        new Sector("money", "#8d9496", this.maxScore),
-        new Sector("social", "#8d9496", this.maxScore),
-        new Sector("hobby", "#8d9496", this.maxScore),
+        new Sector({name: "love", color: "#8d9496", score: 1}),
+        new Sector({name: "love", color: "#8d9496", score: 2}),
+        new Sector({name: "love", color: "#8d9496", score: 3}),
+        new Sector({name: "love", color: "#8d9496", score: 2}),
     ]
 
     constructor(options){
-        this.name = options.name || "balance wheel";        
-        this.name = "balance wheel";        
-        this.maxScore = options.maxScore || 10;
-        this.sectors = options.sectors || this.defaultSectors;
+        this.name = options.name || "balance wheel";       
+        this.maxScore = options.maxScore || 3;
+        this.sectors = options.sectors || this.defaultSectors; 
+        console.log(this.defaultSectors);       
         this.numberOfSectors = this.sectors.length;
     }
 

@@ -1,4 +1,4 @@
-export class Sector{
+export class Sector {
     name;
     color;
     score;
@@ -6,7 +6,7 @@ export class Sector{
     constructor(options){
         this.name = options.name;
         this.color = options.color;
-        this.score = options.score;
+        this.score = options.score || 0;
     }
 }
 

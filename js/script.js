@@ -1,13 +1,19 @@
-import { init } from "./wheel_balance/instructions.js";
+import { drawAll, addEvent } from "./wheel_balance/instructions.js";
 
 // start
 window.onload = function () {
     const wheel = document.querySelector(".wheelBalance");    
     const btnAdd = document.getElementById("btnAdd");
     //btnAdd.onclick = init();
-
+    
+    drawAll();
+    addEvent();
+    
     
 }
+
+
+
 
 
 // Получение элемента canvas, контекста и свойства Math.PI
@@ -47,7 +53,7 @@ const colors = [
 
 // DRAWING
 
-drawAll(); // todo
+//drawAll(); // todo
 
 
 
@@ -60,7 +66,7 @@ function isSelected() {
 }
 
 
-function drawAll() {
+function drawAll2() {
     // drawing wheel
     ctx.beginPath(); // начало нового пути
     ctx.lineWidth = LINE_WIDTH; // толщина обводки
@@ -77,10 +83,6 @@ function drawAll() {
         drawWheel(RADIUS * i);
         console.log(RADIUS * i);
     }
-}
-
-function addEvents() {
-
 }
 
 function drawWheel(radius) {
