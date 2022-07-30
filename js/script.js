@@ -1,13 +1,17 @@
-import { drawAll, addEvent } from "./wheel_balance/instructions.js";
+import { drawAll, addEvent, drawMenu, addSector } from "./wheel_balance/instructions.js";
 
 // start
 window.onload = function () {
     const wheel = document.querySelector(".wheelBalance");    
-    const btnAdd = document.getElementById("btnAdd");
+    
     //btnAdd.onclick = init();
     
     drawAll();
     addEvent();
+    drawMenu();
+
+    const btnAdd = document.getElementById("btnAdd");
+    btnAdd.onclick = addSector;
     
     
 }

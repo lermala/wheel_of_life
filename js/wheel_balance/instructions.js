@@ -1,5 +1,6 @@
 import { Sector } from './Sector.js'
 import { BalanceWheel } from './Wheel.js'
+import { addBlock, addSectorToMenu, updateScore } from './menu.js'
 
 
 // Получение элемента canvas, контекста и свойства Math.PI
@@ -24,20 +25,7 @@ const SECTORS_DEGREES = 2 * PI / SECTORS_COUNT; // градусы сектора
 const LINE_WIDTH = 1; // толщина обводки
 const STROKE_STYLE = "#8d9496"; // цвет обводки
 const FILL_STYLE = "#ed61ca";
-const colors = [
-    "#66C5CC",
-    "#F6CF71",
-    "#F89C74",
-    "#DCB0F2",
-    "#87C55F",
-    "#9EB9F3",
-    "#FE88B1",
-    "#C9DB74",
-    "#8BE0A4",
-    "#B497E7",
-    "#D3B484",
-    "#B3B3B3"
-];
+
 
 
 
@@ -53,9 +41,12 @@ export function drawAll() {
 }
 
 function drawAllSectors() {
+    // addBlock();     
     balanceWheel.sectors.forEach(function (value, i) {
-        drawSector(RADIUS * value.score, i * SECTORS_DEGREES, colors[i]);
-        // todo write name nearby sector!!!
+        drawSector(RADIUS * value.score, i * SECTORS_DEGREES, value.color);
+        // drawText(value.name, 10, 40); // todo 
+        // addSector(value, balanceWheel.maxScore);
+        console.log(value.name);
     });
 }
 
@@ -85,21 +76,35 @@ function drawSector(radius, start, color) {
     ctx.stroke();
 }
 
+function drawText(txt, x, y) {
+    ctx.save();
+    // ctx.rotate(SECTORS_DEGREES / 2);
+    // ctx.translate(SECTORS_DEGREES, SECTORS_DEGREES);
 
-// actions with sectors
+    ctx.translate(0, 0);
+    ctx.translate(0, MAX_RADIUS);
+    ctx.font = "18px Verdana";
+    ctx.fillStyle = "black";
+    ctx.fillText(txt, CENTER_X, CENTER_Y);
+    
+
+    ctx.restore();
+}
+
+
+// ==================== actions with sectors ====================
 export function addEvent() {
     console.log("addEvent");
-    canvas.onmousemove = canvasMove;    
+    canvas.onmousemove = canvasMove;
     canvas.onclick = canvasClick; // todo // сохранение текущ. положения или перерисовка из массива
-
 }
 
 var curSector = -1;
 var curScore = -1;
 function canvasMove(evt) {
-    curSector = findHoveredSector(evt);
+    curSector = checkCurrentCoordinates(evt);
     console.log(curSector); // todo
-    console.log("curScore="+curScore); // todo
+    console.log("curScore=" + curScore); // todo
 
     // draw new sector but after leave clean it
     if (curSector == -1) {
@@ -118,10 +123,11 @@ function canvasClick(evt) {
         // какой-то сектор под курсором и что-то можем сделать
         // writing new score in sector array
         balanceWheel.sectors[curSector - 1].score = curScore;
+        updateScore(curSector - 1, curScore); // drawing new score
     }
 }
 
-function findHoveredSector(evt) {
+function checkCurrentCoordinates(evt) {
     // https://ru.stackoverflow.com/questions/238719/%D0%9E%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA-mousemove-%D0%B2-canvas
     var start = 0;
     var rad = 2 / SECTORS_COUNT * PI; // todo
@@ -136,6 +142,8 @@ function findHoveredSector(evt) {
     // теорема пифагора
     var distanceFromCentre = Math.sqrt(Math.pow(Math.abs(xFromCentre), 2) + Math.pow(Math.abs(yFromCentre), 2));
 
+    // если выходим за пределы колеса, то возвращаем его в состояние из массива
+    // это нужно чтобы очистить превью при mousemove
     if (distanceFromCentre > MAX_RADIUS) {
         if (curSector != -1) {
             clearHovered();
@@ -144,7 +152,7 @@ function findHoveredSector(evt) {
         return -1; // todo    
     }
 
-    // находим текущий круг
+    // смотрим в пределах какой окруждности находимся
     curScore = findHoveredScore(distanceFromCentre);
 
     // угол относительно центра (начинаем с 12 часов)
@@ -162,31 +170,63 @@ function findHoveredSector(evt) {
 }
 
 function findHoveredScore(distanceFromCentre) {
+    // поставим проверку, чтобы была возможность поставить 0.
+    if (distanceFromCentre <= RADIUS / 2) {
+        return 0;
+    }
+
     const roundedDistance = Math.ceil(distanceFromCentre / RADIUS) * RADIUS;
     return roundedDistance / RADIUS;
 }
 
+// возврат к состоянию из массива (очистка превью)
 function clearHovered() {
-    console.log("cleared");
     curSector = -1;
     curScore = -1;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);    
+    clearCanvas();
+}
+
+function clearCanvas(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 // при наведении мыши предпросмотр нового сектора
 // после отпуска мыши возврат к исх. состоянию
-function previewSectors(){
+function previewSectors() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // todo clear
     console.log("preview curScore=" + curScore + " curSector=" + curSector); // todo
-    balanceWheel.sectors.forEach(function (value, i) {           
+    balanceWheel.sectors.forEach(function (value, i) {
         if (i + 1 == curSector) {
             drawSector(RADIUS * curScore, i * SECTORS_DEGREES, colors[i]);  // todo      
         } else {
             drawSector(RADIUS * value.score, i * SECTORS_DEGREES, colors[i]);  // todo      
-        }        
+        }
     });
 
     drawAllWheels(); // todo
 }
+
+
+// ==================== work with menu ====================
+export function drawMenu() {
+    // addBlock();
+    balanceWheel.sectors.forEach(el => addSectorToMenu(el, balanceWheel.maxScore));
+
+    // addSectorToMenu(balanceWheel.sectors[0], balanceWheel.maxScore);   
+    
+}
+
+function updateSectorMenu(id){
+
+}
+
+export function addSector() {
+    console.log("click btn add");
+    balanceWheel.addSector(new Sector({}));    
+    addSectorToMenu(balanceWheel.sectors[balanceWheel.sectors.length - 1]);           
+    clearCanvas();
+    drawAll();
+}
+
 

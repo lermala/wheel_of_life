@@ -32,6 +32,11 @@ body {
     }
 }
 
+%main_border{
+    border: 1px solid #000;
+    border-radius: 4px;
+}
+
 header {
     font-weight: 700;
     background-color: $clr_black;
@@ -63,7 +68,7 @@ header {
         #wheelBalance{
             //width: 500px;
             //height: 500px;
-            border: 1px solid #000;
+            @extend %main_border;
             
         }
     }
@@ -73,13 +78,10 @@ header {
     }    
 }
 
-
-
 .menuWheel {
     &__block {
         padding: 10px;
-        border: 1px solid #000;
-        border-radius: 4px;
+        @extend %main_border;
     }
     &__item {
         //padding: 3px 0;
@@ -89,9 +91,25 @@ header {
 .sectorInfo {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
 
-    &__name {               
-        &::before{
+    .containerNameColor{
+        display: flex;
+    }
+
+    &__color{
+        background: $clr_pinkLight left no-repeat;
+        height: 16px;
+        width: 16px; 
+        border-radius: 50%;    
+        margin-right: 8px;      
+    }
+
+    &__name { 
+        display: flex;
+        flex-direction: row;
+        
+/*         &::before{
             content: "";            
             background: $clr_pinkLight left no-repeat;              
             height: 16px;
@@ -101,7 +119,7 @@ header {
             margin-right: 8px;                
             vertical-align: top;   
             margin-bottom: 3px;       
-        }
+        }  */                                        
     }
     &__score {
         color: $clr_greyDark;
@@ -111,10 +129,11 @@ header {
     background-color: $clr_grey;
     text-transform: uppercase;
     color: $clr_black;
-    font-weight: 700px;
-    border: 1px solid #000;
-    border-radius: 3px;
+    font-weight: 700px;    
     display: inline-block;
-    padding: 5px 8px;    
+    padding: 5px 8px;  
+    @extend %main_border;  
 }
+
+
 

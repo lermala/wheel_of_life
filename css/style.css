@@ -110,6 +110,11 @@ body {
   margin-right: 0px;
 }
 
+.btnMain, .menuWheel__block, .content__wheel #wheelBalance {
+  border: 1px solid #000;
+  border-radius: 4px;
+}
+
 header {
   font-weight: 700;
   background-color: #19191c;
@@ -135,17 +140,12 @@ header__title {
 .content__wheel {
   margin: 0 auto;
 }
-.content__wheel #wheelBalance {
-  border: 1px solid #000;
-}
 .content__menu {
   width: 250px;
 }
 
 .menuWheel__block {
   padding: 10px;
-  border: 1px solid #000;
-  border-radius: 4px;
 }
 .menuWheel__item {
   margin: 4px 0px;
@@ -154,17 +154,32 @@ header__title {
 .sectorInfo {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 }
-.sectorInfo__name::before {
-  content: "";
+.sectorInfo .containerNameColor {
+  display: flex;
+}
+.sectorInfo__color {
   background: #ed61ca left no-repeat;
   height: 16px;
   width: 16px;
   border-radius: 50%;
-  display: inline-block;
   margin-right: 8px;
-  vertical-align: top;
-  margin-bottom: 3px;
+}
+.sectorInfo__name {
+  display: flex;
+  flex-direction: row;
+  /*         &::before{
+              content: "";            
+              background: $clr_pinkLight left no-repeat;              
+              height: 16px;
+              width: 16px;            
+              border-radius: 50%;
+              display: inline-block;            
+              margin-right: 8px;                
+              vertical-align: top;   
+              margin-bottom: 3px;       
+          }  */
 }
 .sectorInfo__score {
   color: #8d9496;
@@ -175,8 +190,6 @@ header__title {
   text-transform: uppercase;
   color: #19191c;
   font-weight: 700px;
-  border: 1px solid #000;
-  border-radius: 3px;
   display: inline-block;
   padding: 5px 8px;
 }
