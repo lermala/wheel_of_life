@@ -165,7 +165,7 @@ header {
 
 }
 
-.coloredCircle{
+.coloredCircle {
     display: block;
     background: $clr_pinkLight left no-repeat;
     height: 16px;
@@ -179,8 +179,8 @@ header {
 
 .tableSectors {
     width: 100%;
-    border-collapse: collapse;     
-    
+    border-collapse: collapse;
+
     td {
         // border: 1px solid #000;
         vertical-align: top;
@@ -212,6 +212,15 @@ header {
         text-align: right;
         color: $clr_greyDark;
         white-space: nowrap;
+        padding-right: 0;
+    }
+
+    // max score
+    td:nth-child(4) {
+        text-align: left;
+        color: $clr_greyDark;
+        white-space: nowrap;
+        padding-left: 0;
     }
 
     // btn delete

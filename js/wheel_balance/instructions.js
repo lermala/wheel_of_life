@@ -1,6 +1,6 @@
 import { Sector } from './Sector.js'
 import { BalanceWheel } from './Wheel.js'
-import { addBlock, addSectorToMenu, deleteSectorFromMenu, updateScoreInMenu } from './menu.js'
+import { addBlock, addSectorToMenu, deleteSectorFromMenu, updateScoreInMenu, updateAllMaxScore} from './menu.js'
 
 
 // Получение элемента canvas, контекста и свойства Math.PI
@@ -35,7 +35,7 @@ export function drawAll() {
     ctx.fillStyle = FILL_STYLE;
 
     drawAllSectors();
-    drawAllWheels();
+    drawAllWheels();    
 }
 
 function drawAllSectors() {

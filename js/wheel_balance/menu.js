@@ -2,6 +2,7 @@ const menu = document.querySelector('.menuWheel');
 const BLOCK_CLASS_NAME = '.menuWheel__block';
 const COL_NAME_ID = 1;
 const COL_SCORE_ID = 2;
+const COL_MAXSCORE_ID = 3;
 
 
 
@@ -16,7 +17,7 @@ function addSectors() {
     );
 }
 
-export function addSectorToMenu(sector) {
+export function addSectorToMenu(sector, maxScore) {
     // находим таблицу секторов  // todo!!!
     const tableSectors = document.querySelector('.tableSectors');
 
@@ -32,7 +33,10 @@ export function addSectorToMenu(sector) {
     tdName.textContent = sector.name;
     // счет
     const tdScore = document.createElement('td');
-    tdScore.textContent = sector.score; // todo
+    tdScore.textContent = sector.score;
+    // max счет
+    const tdMaxScore = document.createElement('td');
+    tdMaxScore.textContent = '/' + maxScore; // todo
     // кнопка // todo
     const tdBtn = document.createElement('td');
     tdBtn.textContent = '—';
@@ -41,10 +45,20 @@ export function addSectorToMenu(sector) {
     rowSector.appendChild(tdColor);
     rowSector.appendChild(tdName);
     rowSector.appendChild(tdScore);
+    rowSector.appendChild(tdMaxScore);
     rowSector.appendChild(tdBtn);
 
     // вставляем сектор
     tableSectors.appendChild(rowSector);
+}
+
+export function updateAllMaxScore(maxScore) {
+    const tableSectors = document.querySelector('.tableSectors');
+
+    tableSectors.querySelectorAll('tr').forEach(el => {
+        const tdMaxScore = el.querySelectorAll('td')[COL_MAXSCORE_ID];
+        tdMaxScore.textContent = maxScore;
+    });
 }
 
 // old version
@@ -117,7 +131,11 @@ export function deleteSectorFromMenu(id) {
     sectorItem.remove();
 }
 
-function findSectorRow(id) {    
+function getClickedRemoveId(){
+    // wat?
+}
+
+function findSectorRow(id) {
     // todo?
     const tableSectors = document.querySelector('.tableSectors'); // находим таблицу секторов     
     return tableSectors.querySelectorAll('tr')[id];

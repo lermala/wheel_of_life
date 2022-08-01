@@ -218,6 +218,13 @@ header__title {
   text-align: right;
   color: #8d9496;
   white-space: nowrap;
+  padding-right: 0;
+}
+.tableSectors td:nth-child(4) {
+  text-align: left;
+  color: #8d9496;
+  white-space: nowrap;
+  padding-left: 0;
 }
 .tableSectors td:last-child {
   text-align: right;
