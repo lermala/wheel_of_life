@@ -1,6 +1,6 @@
 import { Sector } from './Sector.js'
 import { BalanceWheel } from './Wheel.js'
-import { addBlock, addSectorToMenu, updateScore } from './menu.js'
+import { addBlock, addSectorToMenu, deleteSectorFromMenu, updateScoreInMenu } from './menu.js'
 
 
 // Получение элемента canvas, контекста и свойства Math.PI
@@ -15,18 +15,16 @@ const CENTER_Y = CANVAS_W / 2;
 
 // wheel info
 var balanceWheel = new BalanceWheel({}); // дефолтное колесо
-const RADIUS = 50; // радиус минимальной (стартовой) окружности // todo
-const WHEELS_COUNT = balanceWheel.maxScore; // кол-во кругов
-const MAX_RADIUS = RADIUS * WHEELS_COUNT; // кол-во кругов
-const SECTORS_COUNT = balanceWheel.numberOfSectors; // кол-во сфер/секторов
-const SECTORS_DEGREES = 2 * PI / SECTORS_COUNT; // градусы сектора
+// const RADIUS = balanceWheel.radius; // радиус минимальной (стартовой) окружности // todo
+// const WHEELS_COUNT = balanceWheel.maxScore; // кол-во кругов
+// const MAX_RADIUS = balanceWheel.maxRadius; // кол-во кругов
+// const SECTORS_COUNT = balanceWheel.numberOfSectors; // кол-во сфер/секторов
+// const SECTORS_DEGREES = balanceWheel.sectorDegrees; // градусы сектора
 
 // visual style
 const LINE_WIDTH = 1; // толщина обводки
 const STROKE_STYLE = "#8d9496"; // цвет обводки
 const FILL_STYLE = "#ed61ca";
-
-
 
 
 // DRAWING
@@ -43,17 +41,21 @@ export function drawAll() {
 function drawAllSectors() {
     // addBlock();     
     balanceWheel.sectors.forEach(function (value, i) {
-        drawSector(RADIUS * value.score, i * SECTORS_DEGREES, value.color);
+        drawSector(
+            balanceWheel.radius * value.score, 
+            i * balanceWheel.sectorDegrees, 
+            value.color
+        );
         // drawText(value.name, 10, 40); // todo 
         // addSector(value, balanceWheel.maxScore);
-        console.log(value.name);
+        
     });
 }
 
 function drawAllWheels() {
     // drawing all wheels
-    for (let i = WHEELS_COUNT; i >= 1; i--) { // todo change 5 to numb of scores
-        drawWheel(RADIUS * i);
+    for (let i = balanceWheel.maxScore; i >= 1; i--) { // todo change 5 to numb of scores
+        drawWheel(balanceWheel.radius * i);
     }
 }
 
@@ -68,7 +70,7 @@ function drawWheel(radius) {
 function drawSector(radius, start, color) {
     ctx.beginPath(); // начало нового пути
     ctx.moveTo(CENTER_X, CENTER_Y);
-    ctx.arc(CENTER_X, CENTER_Y, radius, start, start + SECTORS_DEGREES, false);
+    ctx.arc(CENTER_X, CENTER_Y, radius, start, start + balanceWheel.sectorDegrees, false);
     ctx.lineTo(CENTER_X, CENTER_Y);
 
     ctx.fillStyle = color;
@@ -82,7 +84,7 @@ function drawText(txt, x, y) {
     // ctx.translate(SECTORS_DEGREES, SECTORS_DEGREES);
 
     ctx.translate(0, 0);
-    ctx.translate(0, MAX_RADIUS);
+    ctx.translate(0, balanceWheel.maxRadius);
     ctx.font = "18px Verdana";
     ctx.fillStyle = "black";
     ctx.fillText(txt, CENTER_X, CENTER_Y);
@@ -103,8 +105,8 @@ var curSector = -1;
 var curScore = -1;
 function canvasMove(evt) {
     curSector = checkCurrentCoordinates(evt);
-    console.log(curSector); // todo
-    console.log("curScore=" + curScore); // todo
+    // console.log(curSector); // todo
+    // console.log("curScore=" + curScore); // todo
 
     // draw new sector but after leave clean it
     if (curSector == -1) {
@@ -123,14 +125,14 @@ function canvasClick(evt) {
         // какой-то сектор под курсором и что-то можем сделать
         // writing new score in sector array
         balanceWheel.sectors[curSector - 1].score = curScore;
-        updateScore(curSector - 1, curScore); // drawing new score
+        updateScoreInMenu(curSector - 1, curScore); // drawing new score
     }
 }
 
 function checkCurrentCoordinates(evt) {
     // https://ru.stackoverflow.com/questions/238719/%D0%9E%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA-mousemove-%D0%B2-canvas
     var start = 0;
-    var rad = 2 / SECTORS_COUNT * PI; // todo
+    var rad = 2 / balanceWheel.numberOfSectors * Math.PI; // todo
 
     // Получаем координаты точки холста, в которой щелкнули
     var mouseX = evt.pageX - canvas.offsetLeft;
@@ -144,7 +146,7 @@ function checkCurrentCoordinates(evt) {
 
     // если выходим за пределы колеса, то возвращаем его в состояние из массива
     // это нужно чтобы очистить превью при mousemove
-    if (distanceFromCentre > MAX_RADIUS) {
+    if (distanceFromCentre > balanceWheel.maxRadius) {
         if (curSector != -1) {
             clearHovered();
             drawAll();
@@ -160,7 +162,7 @@ function checkCurrentCoordinates(evt) {
     if (clickAngle < 0) clickAngle = 2 * Math.PI + clickAngle;
     clickAngle = clickAngle + start; // небольшой хак
 
-    for (var i = 1; i < SECTORS_COUNT + 1; i++) {
+    for (var i = 1; i < balanceWheel.numberOfSectors + 1; i++) {
         if (clickAngle >= start + rad * (i - 1) && clickAngle <= start + rad * i) {
             return i;
         }
@@ -171,12 +173,12 @@ function checkCurrentCoordinates(evt) {
 
 function findHoveredScore(distanceFromCentre) {
     // поставим проверку, чтобы была возможность поставить 0.
-    if (distanceFromCentre <= RADIUS / 2) {
+    if (distanceFromCentre <= balanceWheel.radius / 2) {
         return 0;
     }
 
-    const roundedDistance = Math.ceil(distanceFromCentre / RADIUS) * RADIUS;
-    return roundedDistance / RADIUS;
+    const roundedDistance = Math.ceil(distanceFromCentre / balanceWheel.radius) * balanceWheel.radius;
+    return roundedDistance / balanceWheel.radius;
 }
 
 // возврат к состоянию из массива (очистка превью)
@@ -194,13 +196,20 @@ function clearCanvas(){
 // при наведении мыши предпросмотр нового сектора
 // после отпуска мыши возврат к исх. состоянию
 function previewSectors() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // todo clear
-    console.log("preview curScore=" + curScore + " curSector=" + curSector); // todo
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // todo clear    
     balanceWheel.sectors.forEach(function (value, i) {
         if (i + 1 == curSector) {
-            drawSector(RADIUS * curScore, i * SECTORS_DEGREES, colors[i]);  // todo      
+            drawSector(
+                balanceWheel.radius * curScore, 
+                i * balanceWheel.sectorDegrees, 
+                value.color
+            );  // todo      
         } else {
-            drawSector(RADIUS * value.score, i * SECTORS_DEGREES, colors[i]);  // todo      
+            drawSector(
+                balanceWheel.radius * value.score, 
+                i * balanceWheel.sectorDegrees, 
+                value.color
+            );  // todo      
         }
     });
 
@@ -222,11 +231,17 @@ function updateSectorMenu(id){
 }
 
 export function addSector() {
-    console.log("click btn add");
-    balanceWheel.addSector(new Sector({}));    
+    balanceWheel.addSector(new Sector({})); // todo 
+    balanceWheel.recount();
     addSectorToMenu(balanceWheel.sectors[balanceWheel.sectors.length - 1]);           
     clearCanvas();
     drawAll();
+}
+
+function deleteSector(id){
+    balanceWheel.deleteSector(id);
+    balanceWheel.recount();
+
 }
 
 

@@ -6,6 +6,10 @@ export class BalanceWheel {
     maxScore; // максимальный балл сектора / сферы
     sectors;
 
+    radius; // радиус одной окружности
+    maxRadius; // радиус наибольшей окружности
+    sectorDegrees; // градусы сектора
+
     colors = [ // todo delete
         "#66C5CC",
         "#F6CF71",
@@ -23,18 +27,26 @@ export class BalanceWheel {
 
     defaultSectors = [
         new Sector({ name: "Любовь", color: this.colors[0], score: 1 }),
-        new Sector({ name: "Работа", color: this.colors[1], score: 2 }),
+        new Sector({ name: "Личностный рост", color: this.colors[1], score: 2 }),
         new Sector({ name: "Социальная активность", color: this.colors[2], score: 3 }),
         new Sector({ name: "Финансы", color: this.colors[3], score: 2 }),
         new Sector({ name: "Хобби, увлечения", color: this.colors[4], score: 2 }),
+        new Sector({ name: "Здоровье и спорт", color: this.colors[5], score: 2 }),
     ]
 
     constructor(options) {
         this.name = options.name || "balance wheel";
-        this.maxScore = options.maxScore || 4;
-        this.sectors = options.sectors || this.defaultSectors;
-        console.log(this.defaultSectors);
+        this.maxScore = options.maxScore || 8;
+        this.sectors = options.sectors || this.defaultSectors;        
+
+        this.radius = this.radius || 30;
+        this.recount();
+    }
+
+    recount(){
         this.numberOfSectors = this.sectors.length;
+        this.maxRadius = this.radius * this.maxScore;
+        this.sectorDegrees = 2 * Math.PI / this.numberOfSectors;
     }
 
     getSectorDegrees() {

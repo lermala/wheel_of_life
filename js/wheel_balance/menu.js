@@ -68,13 +68,14 @@ export function updateSector(id, updatedSector) {
     
 }
 
-export function updateScore(id, newScore) {    
+export function updateScoreInMenu(id, newScore) {    
     // searching сектор
     const sectorItem = document.querySelectorAll(SECTOR_CLASS_NAME)[id];
     const sectorScore = sectorItem.querySelector(".sectorInfo__score");
     sectorScore.textContent = newScore;
 }
 
-export function deleteSector(id){ 
-
+export function deleteSectorFromMenu(id) { 
+    const sectorItem = document.querySelectorAll(SECTOR_CLASS_NAME)[id];
+    sectorItem.remove();
 }

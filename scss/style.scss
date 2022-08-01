@@ -126,13 +126,31 @@ header {
     }
 }
 .btnMain {
+    @extend %main_border; 
+    display: inline-block; 
     background-color: $clr_grey;
     text-transform: uppercase;
+    //font-weight: 600;
+    letter-spacing: 0.25px;
     color: $clr_black;
     font-weight: 700px;    
-    display: inline-block;
-    padding: 5px 8px;  
-    @extend %main_border;  
+    vertical-align: middle;
+    padding: 3px 6px 2px 6px; 
+    cursor: default;
+    &:hover{
+        background-color: $clr_pinkLight;
+    }
+    
+    p {       
+        &::before {
+            content: "+";
+            font-size: 20px;                                  
+            vertical-align: middle;
+            margin-right: 3px;            
+        }
+    }
+
+
 }
 
 

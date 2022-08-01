@@ -186,10 +186,22 @@ header__title {
 }
 
 .btnMain {
+  display: inline-block;
   background-color: #f3f3f3;
   text-transform: uppercase;
+  letter-spacing: 0.25px;
   color: #19191c;
   font-weight: 700px;
-  display: inline-block;
-  padding: 5px 8px;
+  vertical-align: middle;
+  padding: 3px 6px 2px 6px;
+  cursor: default;
+}
+.btnMain:hover {
+  background-color: #ed61ca;
+}
+.btnMain p::before {
+  content: "+";
+  font-size: 20px;
+  vertical-align: middle;
+  margin-right: 3px;
 }
