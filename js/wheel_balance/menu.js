@@ -1,6 +1,9 @@
 const menu = document.querySelector('.menuWheel');
 const BLOCK_CLASS_NAME = '.menuWheel__block';
-const SECTOR_CLASS_NAME = '.sectorInfo';
+const COL_NAME_ID = 1;
+const COL_SCORE_ID = 2;
+
+
 
 function drawMenu() {
     addBlock();
@@ -13,7 +16,39 @@ function addSectors() {
     );
 }
 
-export function addSectorToMenu(sector, maxScore) {    
+export function addSectorToMenu(sector) {
+    // находим таблицу секторов  // todo!!!
+    const tableSectors = document.querySelector('.tableSectors');
+
+    // заполняем строку таблицы
+    const rowSector = document.createElement('tr');
+
+    // цвет
+    const tdColor = document.createElement('td');
+    tdColor.className = 'coloredCircle';
+    tdColor.style.background = sector.color;
+    // название
+    const tdName = document.createElement('td');
+    tdName.textContent = sector.name;
+    // счет
+    const tdScore = document.createElement('td');
+    tdScore.textContent = sector.score; // todo
+    // кнопка // todo
+    const tdBtn = document.createElement('td');
+    tdBtn.textContent = '—';
+
+    // вставляем в строку
+    rowSector.appendChild(tdColor);
+    rowSector.appendChild(tdName);
+    rowSector.appendChild(tdScore);
+    rowSector.appendChild(tdBtn);
+
+    // вставляем сектор
+    tableSectors.appendChild(rowSector);
+}
+
+// old version
+function addSectorToMenu2(sector, maxScore) {
     const blockSectors = menu.querySelector(BLOCK_CLASS_NAME); // берем первый блок // todo
     // создаем сектор
     const newSector = document.createElement('div');
@@ -24,15 +59,15 @@ export function addSectorToMenu(sector, maxScore) {
     const nameSector = document.createElement('div');
     nameSector.className = "sectorInfo__name";
     nameSector.textContent = sector.name;
-    
+
     // цвет
     const colorSector = document.createElement('div');
     colorSector.className = "sectorInfo__color";
-    colorSector.style.background = sector.color;    
+    colorSector.style.background = sector.color;
 
     // добавляем контейнер для цвета и названия
     const containerNameColor = document.createElement('div');
-    containerNameColor.className = "containerNameColor";    
+    containerNameColor.className = "containerNameColor";
     containerNameColor.append(colorSector);
     containerNameColor.append(nameSector);
 
@@ -56,26 +91,34 @@ export function addBlock() {
     menu.prepend(newBlock);
 };
 
-export function updateSector(id, updatedSector) {    
-    const blockSectors = menu.querySelector(BLOCK_CLASS_NAME); // берем первый блок // todo
-    
-    // searching сектор
-    const sectorItem = document.querySelectorAll(SECTOR_CLASS_NAME)[id];
-    
+export function updateSectorName(id, updatedSector) {
+    const sectorRow = findSectorRow(id);
+    const sectorTd = sectorRow.querySelectorAll('td')[COL_NAME_ID]; // todo
+
     // updating sector
-    sectorItem.textContent = updateSector.name;
-
-    
+    sectorTd.textContent = updatedSector.name;
 }
 
-export function updateScoreInMenu(id, newScore) {    
+export function updateScoreInMenu(id, newScore) {
+    // находим таблицу секторов  // todo!!!
+    const tableSectors = document.querySelector('.tableSectors');
+
     // searching сектор
-    const sectorItem = document.querySelectorAll(SECTOR_CLASS_NAME)[id];
-    const sectorScore = sectorItem.querySelector(".sectorInfo__score");
-    sectorScore.textContent = newScore;
+    // const sectorItem = document.querySelectorAll(SECTOR_CLASS_NAME)[id];
+    const sectorRow = findSectorRow(id);
+    const sectorTd = sectorRow.querySelectorAll('td')[COL_SCORE_ID]; // todo
+
+    // updating sector
+    sectorTd.textContent = newScore;
 }
 
-export function deleteSectorFromMenu(id) { 
-    const sectorItem = document.querySelectorAll(SECTOR_CLASS_NAME)[id];
+export function deleteSectorFromMenu(id) {
+    const sectorItem = findSectorRow(id);
     sectorItem.remove();
+}
+
+function findSectorRow(id) {    
+    // todo?
+    const tableSectors = document.querySelector('.tableSectors'); // находим таблицу секторов     
+    return tableSectors.querySelectorAll('tr')[id];
 }

@@ -151,35 +151,12 @@ header__title {
   margin: 4px 0px;
 }
 
-.sectorInfo {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-.sectorInfo .containerNameColor {
-  display: flex;
-}
 .sectorInfo__color {
+  display: block;
   background: #ed61ca left no-repeat;
   height: 16px;
   width: 16px;
   border-radius: 50%;
-  margin-right: 8px;
-}
-.sectorInfo__name {
-  display: flex;
-  flex-direction: row;
-  /*         &::before{
-              content: "";            
-              background: $clr_pinkLight left no-repeat;              
-              height: 16px;
-              width: 16px;            
-              border-radius: 50%;
-              display: inline-block;            
-              margin-right: 8px;                
-              vertical-align: top;   
-              margin-bottom: 3px;       
-          }  */
 }
 .sectorInfo__score {
   color: #8d9496;
@@ -204,4 +181,44 @@ header__title {
   font-size: 20px;
   vertical-align: middle;
   margin-right: 3px;
+}
+
+.coloredCircle {
+  display: block;
+  background: #ed61ca left no-repeat;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+}
+
+.tableSectors {
+  width: 100%;
+  border-collapse: collapse;
+}
+.tableSectors td {
+  vertical-align: top;
+  padding: 3px 4px 4px 3px;
+}
+.tableSectors tr:hover {
+  background-color: #f3f3f3;
+  border-radius: 3px;
+}
+.tableSectors td:first-child {
+  text-align: center;
+  margin-top: 2px;
+  margin-right: 4px;
+  padding: 0;
+  white-space: nowrap;
+}
+.tableSectors td:nth-child(2) {
+  text-align: left;
+  width: 100%;
+}
+.tableSectors td:nth-child(3) {
+  text-align: right;
+  color: #8d9496;
+  white-space: nowrap;
+}
+.tableSectors td:last-child {
+  text-align: right;
 }

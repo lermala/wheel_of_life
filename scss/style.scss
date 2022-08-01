@@ -13,18 +13,20 @@ $mg_main: 10%;
 
 * {
     padding: 0;
-    margin: 0;    
+    margin: 0;
 }
 
 body {
     font-family: 'Manrope', sans-serif;
 }
 
-.menuHorizontal{
-    >ul{
+.menuHorizontal {
+    >ul {
         display: flex;
+
         >li {
             margin-right: 20px;
+
             &:last-child {
                 margin-right: 0px;
             }
@@ -32,7 +34,7 @@ body {
     }
 }
 
-%main_border{
+%main_border {
     border: 1px solid #000;
     border-radius: 4px;
 }
@@ -41,7 +43,7 @@ header {
     font-weight: 700;
     background-color: $clr_black;
     color: $clr_grey;
-    width: 100%; 
+    width: 100%;
     height: 40px;
     display: flex;
     justify-content: space-between;
@@ -54,10 +56,10 @@ header {
         color: white;
         word-spacing: 4px;
     }
-    &__menu {
 
-    }
+    &__menu {}
 }
+
 .content {
     margin: 50px $mg_main;
     display: flex;
@@ -65,17 +67,18 @@ header {
 
     &__wheel {
         margin: 0 auto;
-        #wheelBalance{
+
+        #wheelBalance {
             //width: 500px;
             //height: 500px;
             @extend %main_border;
-            
+
         }
     }
 
-    &__menu {        
+    &__menu {
         width: 250px;
-    }    
+    }
 }
 
 .menuWheel {
@@ -83,75 +86,136 @@ header {
         padding: 10px;
         @extend %main_border;
     }
+
     &__item {
         //padding: 3px 0;
         margin: 4px 0px;
     }
 }
+
+// .sectorInfo {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: flex-start;
+
+//     .containerNameColor {
+//         display: flex;
+//     }
+
+//     &__color {
+//         background: $clr_pinkLight left no-repeat;
+//         height: 16px;
+//         width: 16px;
+//         border-radius: 50%;
+//         margin-right: 8px;
+//     }
+
+//     &__name {
+//         display: flex;
+//         flex-direction: row;
+//     }
+
+//     &__score {
+//         color: $clr_greyDark;
+//     }
+// }
+
 .sectorInfo {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-
-    .containerNameColor{
-        display: flex;
-    }
-
-    &__color{
+    &__color {
+        display: block;
         background: $clr_pinkLight left no-repeat;
         height: 16px;
-        width: 16px; 
-        border-radius: 50%;    
-        margin-right: 8px;      
+        width: 16px;
+        border-radius: 50%;
     }
 
-    &__name { 
-        display: flex;
-        flex-direction: row;
-        
-/*         &::before{
-            content: "";            
-            background: $clr_pinkLight left no-repeat;              
-            height: 16px;
-            width: 16px;            
-            border-radius: 50%;
-            display: inline-block;            
-            margin-right: 8px;                
-            vertical-align: top;   
-            margin-bottom: 3px;       
-        }  */                                        
-    }
+    &__name {}
+
     &__score {
         color: $clr_greyDark;
     }
 }
+
 .btnMain {
-    @extend %main_border; 
-    display: inline-block; 
+    @extend %main_border;
+    display: inline-block;
     background-color: $clr_grey;
     text-transform: uppercase;
     //font-weight: 600;
     letter-spacing: 0.25px;
     color: $clr_black;
-    font-weight: 700px;    
+    font-weight: 700px;
     vertical-align: middle;
-    padding: 3px 6px 2px 6px; 
+    padding: 3px 6px 2px 6px;
     cursor: default;
-    &:hover{
+
+    &:hover {
         background-color: $clr_pinkLight;
     }
-    
-    p {       
+
+    p {
         &::before {
             content: "+";
-            font-size: 20px;                                  
+            font-size: 20px;
             vertical-align: middle;
-            margin-right: 3px;            
+            margin-right: 3px;
         }
     }
 
 
 }
 
+.coloredCircle{
+    display: block;
+    background: $clr_pinkLight left no-repeat;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+}
 
 
+
+
+
+.tableSectors {
+    width: 100%;
+    border-collapse: collapse;     
+    
+    td {
+        // border: 1px solid #000;
+        vertical-align: top;
+        padding: 3px 4px 4px 3px;
+    }
+
+    tr:hover {
+        background-color: $clr_grey;
+        border-radius: 3px;
+    }
+
+    // color
+    td:first-child {
+        text-align: center;
+        margin-top: 2px;
+        margin-right: 4px;
+        padding: 0;
+        white-space: nowrap;
+    }
+
+    // name
+    td:nth-child(2) {
+        text-align: left;
+        width: 100%;
+    }
+
+    //score
+    td:nth-child(3) {
+        text-align: right;
+        color: $clr_greyDark;
+        white-space: nowrap;
+    }
+
+    // btn delete
+    td:last-child {
+        text-align: right;
+    }
+}
