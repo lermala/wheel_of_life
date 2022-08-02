@@ -239,6 +239,7 @@ export function drawMenu() {
 export function addSector() {
     balanceWheel.addSector(new Sector({})); // todo     
     menuWheel.drawSectors();
+    menuWheel.focusLastInput();
     updateCanvas();
 }
 
@@ -249,7 +250,7 @@ function deleteSector(id) {
 }
 
 function changeSector(id, newName) {
-    balanceWheel.changeSector(id, newName);
+    balanceWheel.changeSectorName(id, newName);
     menuWheel.drawSectors();
     updateCanvas();
 }

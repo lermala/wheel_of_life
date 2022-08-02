@@ -17,6 +17,9 @@ export class MenuWheel {
     toChange;
     toDelete;
 
+    // canvas view info
+    // circlesIsDrawn
+
     constructor(option) {
         this.updateDOM(); // todo
 
@@ -50,7 +53,7 @@ export class MenuWheel {
         const inputName = document.createElement('input');
         inputName.type = "text";
         inputName.value = sector.name;
-        inputName.placeholder = "Название сферы"; // todo     
+        inputName.placeholder = "Впишите сферу"; // todo     
         // todo check on empty input
         inputName.className = "input-sector";
         tdName.appendChild(inputName);
@@ -87,6 +90,12 @@ export class MenuWheel {
         });
 
         this.updateDOM();
+    }
+
+    focusLastInput(){        
+        const sectorRow = this.getSectorRow(this.sectors.length - 1);
+        const sectorTd = sectorRow.querySelectorAll('td')[this.COL_NAME_ID];
+        sectorTd.querySelector('input').focus();
     }
 
     updateScore(id, newScore) {        

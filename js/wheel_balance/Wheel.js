@@ -31,7 +31,7 @@ export class BalanceWheel {
         new Sector({ id: 2, name: "Соц. активность", color: this.colors[2], score: 3 }),
         new Sector({ id: 3, name: "Финансы", color: this.colors[3], score: 2 }),
         new Sector({ id: 4, name: "Хобби, увлечения", color: this.colors[4], score: 2 }),
-        new Sector({ id: 5, name: "Здоровье и спорт", color: this.colors[5], score: 2 }),
+        //new Sector({ id: 5, name: "Здоровье и спорт", color: this.colors[5], score: 2 }),
     ]
 
     constructor(options) {
@@ -53,7 +53,19 @@ export class BalanceWheel {
         return 360 / this.numberOfSectors;
     }
 
-    addSector(sector) {
+    addSector(sector) {        
+        let lastId = -1;
+        if (this.sectors.length > 0) lastId = this.sectors[this.sectors.length - 1].id;
+        sector.id = lastId + 1;        
+        sector.color = this.colors[(lastId + 1) % (this.colors.length - 1)];        
+        this.sectors.push(sector);
+    }
+
+    // todo useless
+    addColoredSector(sector){
+        const lastId = this.sectors[length - 1].id;
+        sector.id = lastId;
+        sector.color = this.colors[this.colors.length % lastId];
         this.sectors.push(sector);
     }
 
@@ -67,8 +79,14 @@ export class BalanceWheel {
         //console.log(this.sectors);
     }
 
-    changeSector(id, newSector) {
-        this.sectors[id] = newSector;
+    changeSectorName(id, newName) {
+        // this.sectors[id] = newSector;
+
+        this.sectors.forEach((element, index) => {
+            if (element.id == id) {
+                this.sectors[index].name = newName;
+            }
+        });   
     }
     
 }

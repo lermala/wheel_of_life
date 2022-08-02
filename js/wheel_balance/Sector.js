@@ -6,9 +6,9 @@ export class Sector {
 
     constructor(options){
         this.id = options.id;
-        this.name = options.name || "Новая сфера";
+        this.name = options.name || "";
         this.color = options.color || "#ddd";
-        this.score = options.score || 0;
+        this.score = options.score || 1;
     }
 }
 
