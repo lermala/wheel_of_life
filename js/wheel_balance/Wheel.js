@@ -26,12 +26,12 @@ export class BalanceWheel {
     ];
 
     defaultSectors = [
-        new Sector({ name: "Любовь", color: this.colors[0], score: 1 }),
-        new Sector({ name: "Личностный рост", color: this.colors[1], score: 2 }),
-        new Sector({ name: "Социальная активность", color: this.colors[2], score: 3 }),
-        new Sector({ name: "Финансы", color: this.colors[3], score: 2 }),
-        new Sector({ name: "Хобби, увлечения", color: this.colors[4], score: 2 }),
-        new Sector({ name: "Здоровье и спорт", color: this.colors[5], score: 2 }),
+        new Sector({ id: 0, name: "Любовь", color: this.colors[0], score: 1 }),
+        new Sector({ id: 1, name: "Личностный рост", color: this.colors[1], score: 2 }),
+        new Sector({ id: 2, name: "Соц. активность", color: this.colors[2], score: 3 }),
+        new Sector({ id: 3, name: "Финансы", color: this.colors[3], score: 2 }),
+        new Sector({ id: 4, name: "Хобби, увлечения", color: this.colors[4], score: 2 }),
+        new Sector({ id: 5, name: "Здоровье и спорт", color: this.colors[5], score: 2 }),
     ]
 
     constructor(options) {
@@ -58,13 +58,17 @@ export class BalanceWheel {
     }
 
     deleteSector(id) {
-        const index = this.sectors.indexOf(id);
-        if (index > -1) { // only splice array when item is found
-            this.sectors.splice(index, 1); // 2nd parameter means remove one item only
-        }
+        this.sectors.forEach((element, index) => {
+            if (element.id == id) {
+                this.sectors.splice(index, 1); // 2nd parameter means remove one item only
+            }
+        });        
+        
+        //console.log(this.sectors);
     }
 
     changeSector(id, newSector) {
         this.sectors[id] = newSector;
     }
+    
 }

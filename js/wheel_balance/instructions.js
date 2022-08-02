@@ -1,7 +1,8 @@
 import { Sector } from './Sector.js'
 import { BalanceWheel } from './Wheel.js'
-import { addBlock, addSectorToMenu, deleteSectorFromMenu, updateScoreInMenu, updateAllMaxScore} from './menu.js'
-
+// import { addSectorToMenu, updateScoreInMenu, redrawSectors, deleteSectorFromMenu, addEventForSectorName, addEventForSectorBtn } from './menu.js'
+import { MenuWheel } from './MenuWheel.js'
+import { updateScoreInMenu } from './menu.js';
 
 // Получение элемента canvas, контекста и свойства Math.PI
 var canvas = document.getElementById('wheelBalance');
@@ -15,11 +16,6 @@ const CENTER_Y = CANVAS_W / 2;
 
 // wheel info
 var balanceWheel = new BalanceWheel({}); // дефолтное колесо
-// const RADIUS = balanceWheel.radius; // радиус минимальной (стартовой) окружности // todo
-// const WHEELS_COUNT = balanceWheel.maxScore; // кол-во кругов
-// const MAX_RADIUS = balanceWheel.maxRadius; // кол-во кругов
-// const SECTORS_COUNT = balanceWheel.numberOfSectors; // кол-во сфер/секторов
-// const SECTORS_DEGREES = balanceWheel.sectorDegrees; // градусы сектора
 
 // visual style
 const LINE_WIDTH = 1; // толщина обводки
@@ -35,20 +31,20 @@ export function drawAll() {
     ctx.fillStyle = FILL_STYLE;
 
     drawAllSectors();
-    drawAllWheels();    
+    drawAllWheels();
 }
 
 function drawAllSectors() {
     // addBlock();     
     balanceWheel.sectors.forEach(function (value, i) {
         drawSector(
-            balanceWheel.radius * value.score, 
-            i * balanceWheel.sectorDegrees, 
+            balanceWheel.radius * value.score,
+            i * balanceWheel.sectorDegrees,
             value.color
         );
         // drawText(value.name, 10, 40); // todo 
         // addSector(value, balanceWheel.maxScore);
-        
+
     });
 }
 
@@ -88,11 +84,20 @@ function drawText(txt, x, y) {
     ctx.font = "18px Verdana";
     ctx.fillStyle = "black";
     ctx.fillText(txt, CENTER_X, CENTER_Y);
-    
+
 
     ctx.restore();
 }
 
+function updateCanvas() {
+    balanceWheel.recount(); // update    
+    clearCanvas(); // clearing
+    drawAll(); // redraw all
+}
+
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
 // ==================== actions with sectors ====================
 export function addEvent() {
@@ -124,8 +129,9 @@ function canvasClick(evt) {
     } else {
         // какой-то сектор под курсором и что-то можем сделать
         // writing new score in sector array
-        balanceWheel.sectors[curSector - 1].score = curScore;
-        updateScoreInMenu(curSector - 1, curScore); // drawing new score
+        // balanceWheel.sectors[curSector - 1].score = curScore;    
+        // menuWheel.updateScore(curSector - 1, curScore);
+        updateScore(curSector - 1, curScore);
     }
 }
 
@@ -181,18 +187,6 @@ function findHoveredScore(distanceFromCentre) {
     return roundedDistance / balanceWheel.radius;
 }
 
-// возврат к состоянию из массива (очистка превью)
-function clearHovered() {
-    curSector = -1;
-    curScore = -1;
-
-    clearCanvas();
-}
-
-function clearCanvas(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
 // при наведении мыши предпросмотр нового сектора
 // после отпуска мыши возврат к исх. состоянию
 function previewSectors() {
@@ -200,14 +194,14 @@ function previewSectors() {
     balanceWheel.sectors.forEach(function (value, i) {
         if (i + 1 == curSector) {
             drawSector(
-                balanceWheel.radius * curScore, 
-                i * balanceWheel.sectorDegrees, 
+                balanceWheel.radius * curScore,
+                i * balanceWheel.sectorDegrees,
                 value.color
             );  // todo      
         } else {
             drawSector(
-                balanceWheel.radius * value.score, 
-                i * balanceWheel.sectorDegrees, 
+                balanceWheel.radius * value.score,
+                i * balanceWheel.sectorDegrees,
                 value.color
             );  // todo      
         }
@@ -216,32 +210,55 @@ function previewSectors() {
     drawAllWheels(); // todo
 }
 
+// возврат к состоянию из массива (очистка превью)
+function clearHovered() {
+    curSector = -1;
+    curScore = -1;
+
+    clearCanvas();
+}
 
 // ==================== work with menu ====================
+const menuWheel = new MenuWheel({
+    sectors: balanceWheel.sectors,
+    maxScore: balanceWheel.maxScore,
+    toChange: (id, newName) => changeSector(id, newName),
+    toDelete: (id) => deleteSector(id),
+});
+
 export function drawMenu() {
-    // addBlock();
-    balanceWheel.sectors.forEach(el => addSectorToMenu(el, balanceWheel.maxScore));
-
-    // addSectorToMenu(balanceWheel.sectors[0], balanceWheel.maxScore);   
-    
+    menuWheel.updateDOM();
+    menuWheel.updateData(balanceWheel.sectors);
+    menuWheel.drawSectors(
+        // (id, newName) => changeSector(id, newName),
+        // (id) => deleteSector(id)
+    );
 }
 
-function updateSectorMenu(id){
-
-}
 
 export function addSector() {
-    balanceWheel.addSector(new Sector({})); // todo 
-    balanceWheel.recount();
-    addSectorToMenu(balanceWheel.sectors[balanceWheel.sectors.length - 1]);           
-    clearCanvas();
-    drawAll();
+    balanceWheel.addSector(new Sector({})); // todo     
+    menuWheel.drawSectors();
+    updateCanvas();
 }
 
-function deleteSector(id){
+function deleteSector(id) {
     balanceWheel.deleteSector(id);
-    balanceWheel.recount();
-
+    menuWheel.drawSectors();
+    updateCanvas();
 }
+
+function changeSector(id, newName) {
+    balanceWheel.changeSector(id, newName);
+    menuWheel.drawSectors();
+    updateCanvas();
+}
+
+function updateScore(id, score) {
+    balanceWheel.sectors[id].score = score;    
+    menuWheel.updateScore(id, score);
+}
+
+
 
 

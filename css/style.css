@@ -184,7 +184,6 @@ header__title {
 }
 
 .coloredCircle {
-  display: block;
   background: #ed61ca left no-repeat;
   height: 16px;
   width: 16px;
@@ -194,31 +193,49 @@ header__title {
 .tableSectors {
   width: 100%;
   border-collapse: collapse;
+  font-size: 14px;
 }
 .tableSectors td {
-  vertical-align: top;
-  padding: 3px 4px 4px 3px;
+  vertical-align: middle;
+  padding: 2px 4px 4px 2px;
 }
-.tableSectors tr:hover {
-  background-color: #f3f3f3;
+.tableSectors .input-sector {
+  font-size: 14px;
+  width: 100%;
+  text-overflow: ellipsis;
+  padding: 2px 4px 2px 4px;
+}
+.tableSectors .input-sector:hover {
   border-radius: 3px;
+  Box-shadow: 0px 1px 0px #bdc2c4, 0px -1px 0px #bdc2c4, 1px 0px 0px #bdc2c4, -1px 0px 0px #bdc2c4;
+}
+.tableSectors .input-sector:focus {
+  border-radius: 3px;
+  Box-shadow: 0px 1px 0px #19191c, 0px -1px 0px #19191c, 1px 0px 0px #19191c, -1px 0px 0px #19191c;
 }
 .tableSectors td:first-child {
+  display: block;
   text-align: center;
-  margin-top: 2px;
-  margin-right: 4px;
-  padding: 0;
+  margin: 5px 4px;
   white-space: nowrap;
+}
+.tableSectors td:first-child:hover {
+  Box-shadow: 0px 1px 0px #bdc2c4, 0px -1px 0px #bdc2c4, 1px 0px 0px #bdc2c4, -1px 0px 0px #bdc2c4;
+}
+.tableSectors td:first-child:focus {
+  Box-shadow: 0px 1px 0px #19191c, 0px -1px 0px #19191c, 1px 0px 0px #19191c, -1px 0px 0px #19191c;
 }
 .tableSectors td:nth-child(2) {
   text-align: left;
   width: 100%;
+  padding: 0;
 }
 .tableSectors td:nth-child(3) {
   text-align: right;
   color: #8d9496;
   white-space: nowrap;
   padding-right: 0;
+  width: 100px;
 }
 .tableSectors td:nth-child(4) {
   text-align: left;
@@ -227,5 +244,17 @@ header__title {
   padding-left: 0;
 }
 .tableSectors td:last-child {
-  text-align: right;
+  text-align: center;
+  height: 16px;
+  width: 16px;
+  font-size: 12px;
+  padding: 0px 5px;
+  cursor: default;
+}
+.tableSectors td:last-child:hover {
+  Box-shadow: 0px 1px 0px #bdc2c4, 0px -1px 0px #bdc2c4, 1px 0px 0px #bdc2c4, -1px 0px 0px #bdc2c4;
+}
+.tableSectors td:last-child:focus {
+  Box-shadow: 0px 1px 0px #19191c, 0px -1px 0px #19191c, 1px 0px 0px #19191c, -1px 0px 0px #19191c;
+  background-color: #bdc2c4;
 }

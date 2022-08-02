@@ -1,8 +1,10 @@
 const menu = document.querySelector('.menuWheel');
 const BLOCK_CLASS_NAME = '.menuWheel__block';
+const COL_COLOR_ID = 0;
 const COL_NAME_ID = 1;
 const COL_SCORE_ID = 2;
 const COL_MAXSCORE_ID = 3;
+const COL_BTN_ID = 4;
 
 
 
@@ -28,15 +30,31 @@ export function addSectorToMenu(sector, maxScore) {
     const tdColor = document.createElement('td');
     tdColor.className = 'coloredCircle';
     tdColor.style.background = sector.color;
+
     // название
     const tdName = document.createElement('td');
-    tdName.textContent = sector.name;
+    // tdName.textContent = sector.name;
+    const inputName = document.createElement('input');
+    inputName.type = "text";
+    inputName.value = sector.name;
+    inputName.placeholder = "Название сферы"; // todo     
+    // todo check on empty input
+    inputName.className = "input-sector";
+    tdName.appendChild(inputName);
+
     // счет
     const tdScore = document.createElement('td');
     tdScore.textContent = sector.score;
+    // const inputScore = document.createElement('input');
+    // inputScore.type = "number"; 
+    // inputScore.className = "input-number";         
+    // inputScore.value = sector.score;    
+    // tdScore.appendChild(inputScore);  
+
     // max счет
     const tdMaxScore = document.createElement('td');
     tdMaxScore.textContent = '/' + maxScore; // todo
+
     // кнопка // todo
     const tdBtn = document.createElement('td');
     tdBtn.textContent = '—';
@@ -59,44 +77,6 @@ export function updateAllMaxScore(maxScore) {
         const tdMaxScore = el.querySelectorAll('td')[COL_MAXSCORE_ID];
         tdMaxScore.textContent = maxScore;
     });
-}
-
-// old version
-function addSectorToMenu2(sector, maxScore) {
-    const blockSectors = menu.querySelector(BLOCK_CLASS_NAME); // берем первый блок // todo
-    // создаем сектор
-    const newSector = document.createElement('div');
-    newSector.classList.add('menuWheel__item');
-    newSector.classList.add('sectorInfo');
-
-    // заполняем сектор
-    const nameSector = document.createElement('div');
-    nameSector.className = "sectorInfo__name";
-    nameSector.textContent = sector.name;
-
-    // цвет
-    const colorSector = document.createElement('div');
-    colorSector.className = "sectorInfo__color";
-    colorSector.style.background = sector.color;
-
-    // добавляем контейнер для цвета и названия
-    const containerNameColor = document.createElement('div');
-    containerNameColor.className = "containerNameColor";
-    containerNameColor.append(colorSector);
-    containerNameColor.append(nameSector);
-
-    // счет
-    const scoreSector = document.createElement('div');
-    scoreSector.className = "sectorInfo__score";
-    scoreSector.textContent = sector.score; // todo
-
-    newSector.append(containerNameColor);
-    newSector.append(scoreSector);
-
-    // вставляем сектор
-    //blockSectors.append(newSector);
-    const btnAdd = document.getElementById('btnAdd');
-    btnAdd.before(newSector); // todo?
 }
 
 export function addBlock() {
@@ -127,11 +107,26 @@ export function updateScoreInMenu(id, newScore) {
 }
 
 export function deleteSectorFromMenu(id) {
-    const sectorItem = findSectorRow(id);
-    sectorItem.remove();
+    const sectorItem = findSectorRow(id);  
+    // const tableSectors = document.querySelector('.tableSectors'); // находим таблицу секторов     
+    // const sectorItem = tableSectors.querySelectorAll('tr')[id]; 
+    
+    console.log(sectorItem);
+    console.log(id);
+    // sectorItem.remove();
+    redrawSectors();
 }
 
-function getClickedRemoveId(){
+export function redrawSectors(sectors, maxScore){
+    // clear 
+    const tableSectors = document.querySelector('.tableSectors');
+    const sectorTrs = tableSectors.querySelectorAll('tr'); 
+    sectorTrs.forEach(element => element.remove());
+    // draw
+    sectors.forEach(el => addSectorToMenu(el, maxScore));
+}
+
+function getClickedRemoveId() {
     // wat?
 }
 
@@ -139,4 +134,28 @@ function findSectorRow(id) {
     // todo?
     const tableSectors = document.querySelector('.tableSectors'); // находим таблицу секторов     
     return tableSectors.querySelectorAll('tr')[id];
+}
+
+export function addEventForSectorName(action) {
+    const tableSectors = document.querySelector('.tableSectors'); // находим таблицу секторов        
+    const trs = tableSectors.getElementsByTagName('tr');    
+    for (let i = 0; i < trs.length; i++) {        
+        const cellName = trs[i].cells[COL_NAME_ID];
+        const inp = cellName.querySelector('input');
+        inp.addEventListener('change', function () {            
+            const newName = inp.value;
+            action(i, newName);
+        });         
+    }
+}
+
+export function addEventForSectorBtn(action) {
+    const tableSectors = document.querySelector('.tableSectors'); // находим таблицу секторов        
+    const trs = tableSectors.getElementsByTagName('tr');    
+    for (let i = 0; i < trs.length; i++) {        
+        const cellBtn = trs[i].cells[COL_BTN_ID];        
+        cellBtn.addEventListener('click', function () {                        
+            action(i);           
+        });         
+    }
 }

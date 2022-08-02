@@ -5,6 +5,7 @@
 // colors
 $clr_black: #19191c;
 $clr_grey: #f3f3f3;
+$clr_greyMiddle: #bdc2c4;
 $clr_greyDark: #8d9496;
 $clr_pinkLight: #ed61ca;
 
@@ -36,7 +37,15 @@ body {
 
 %main_border {
     border: 1px solid #000;
-    border-radius: 4px;
+    border-radius: 4px;           
+}
+
+@mixin bdInside($clr, $width){
+    Box-shadow:0px $width 0px $clr,
+    0px 0-$width 0px $clr,
+    $width 0px 0px $clr,
+    0-$width 0px 0px $clr;
+    // Box-shadow:0px $width 0px #f00,0px 0-$width 0px #f00,1px 0px 0px #f00,-1px 0px 0px #f00;
 }
 
 header {
@@ -93,33 +102,6 @@ header {
     }
 }
 
-// .sectorInfo {
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: flex-start;
-
-//     .containerNameColor {
-//         display: flex;
-//     }
-
-//     &__color {
-//         background: $clr_pinkLight left no-repeat;
-//         height: 16px;
-//         width: 16px;
-//         border-radius: 50%;
-//         margin-right: 8px;
-//     }
-
-//     &__name {
-//         display: flex;
-//         flex-direction: row;
-//     }
-
-//     &__score {
-//         color: $clr_greyDark;
-//     }
-// }
-
 .sectorInfo {
     &__color {
         display: block;
@@ -165,46 +147,65 @@ header {
 
 }
 
-.coloredCircle {
-    display: block;
+.coloredCircle {    
     background: $clr_pinkLight left no-repeat;
     height: 16px;
     width: 16px;
     border-radius: 50%;
 }
 
-
-
-
-
 .tableSectors {
-    width: 100%;
+    width: 100%;    
     border-collapse: collapse;
+    font-size: 14px;
 
     td {
-        // border: 1px solid #000;
-        vertical-align: top;
-        padding: 3px 4px 4px 3px;
+        //border: 1px solid #000;
+        vertical-align: middle;
+        padding: 2px 4px 4px 2px;
     }
 
-    tr:hover {
-        background-color: $clr_grey;
-        border-radius: 3px;
+    .input-sector{
+        font-size: 14px;
+        width: 100%;
+        text-overflow: ellipsis;
+        //padding: 1px 3px; // todo
+        padding: 2px 4px 2px 4px;
+        
+        // font-family: 'Manrope', sans-serif;
+        &:hover {        
+            border-radius: 3px;            
+            @include bdInside($clr_greyMiddle, 1px);            
+        }
+        &:focus {        
+            border-radius: 3px;  
+            @include bdInside($clr_black, 1px);            
+        }
     }
 
     // color
     td:first-child {
+        display: block;
         text-align: center;
-        margin-top: 2px;
-        margin-right: 4px;
-        padding: 0;
+        margin: 5px 4px;
+        // margin-top: 4px;
+        // margin-right: 4px;
+        // margin-left: 4px;        
         white-space: nowrap;
+
+        &:hover{
+            @include bdInside($clr_greyMiddle, 1px);  
+        }
+        &:focus{
+            @include bdInside($clr_black, 1px); 
+        }
     }
 
     // name
     td:nth-child(2) {
         text-align: left;
         width: 100%;
+        padding: 0;
     }
 
     //score
@@ -213,6 +214,7 @@ header {
         color: $clr_greyDark;
         white-space: nowrap;
         padding-right: 0;
+        width: 100px;
     }
 
     // max score
@@ -225,6 +227,20 @@ header {
 
     // btn delete
     td:last-child {
-        text-align: right;
+        text-align: center;
+        height: 16px;
+        width: 16px;
+        //border-radius: 50%;    
+        font-size: 12px;   
+        padding: 0px 5px;        
+        cursor: default;
+
+        &:hover{
+            @include bdInside($clr_greyMiddle, 1px);  
+        }
+        &:focus{
+            @include bdInside($clr_black, 1px); 
+            background-color: $clr_greyMiddle;
+        }
     }
 }
