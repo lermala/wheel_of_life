@@ -23,12 +23,15 @@
 
     <div class="content">
         <div class="content__wheel">
-            <canvas id="wheelBalance" width="500px" height="500px"></canvas>
+            <div class="canvasContainer">
+                <canvas id="wheelBalance" width="800px" height="800px"></canvas>    
+            </div>            
         </div>
         <div class="content__menu">
-            <div class="menuWheel">
+            <div class="menuWheel">               
 
                 <div class="menuWheel__block">
+                    <div class="menuWheel__item"><p class="subtitle">Сферы</p></div>
                     <table class="tableSectors">
 <!--                         <tr>
                             <td class="sectorInfo__color"></td>
@@ -51,12 +54,48 @@
                     </div>
                 </div>
 
+                <div class="menuWheel__block">                    
+                    <div class="menuWheel__item">
+                        <input type="checkbox" name="circles" id="circles">
+                        <label for="circles">Деления</label>
+                    </div>
+                    <div class="menuWheel__item">
+                        <input type="checkbox" name="numbers" id="numbers">
+                        <label for="numbers">Числа</label>
+                    </div>
+                    <div class="menuWheel__item">
+                        <input type="checkbox" name="titles" id="titles">
+                        <label for="numbers">Названия сфер</label>
+                    </div>
+                    <div class="menuWheel__item">
+                        <input type="checkbox" name="uncolored" id="uncolored">
+                        <label for="uncolored">Бесцветный режим</label>
+                    </div>
+                    <div class="menuWheel__item">
+                        <p>Количество делений</p>
+                        <input value="0" type="number" name="maxScore" id="maxScore">                        
+                    </div>
+                </div>
+
+                <div class="menuWheel__block">
+                    <div class="menuWheel__item btnAction">Шаблонные палитры</div>
+                    <div class="menuWheel__item btnAction">Примеры и шаблоны</div>
+                    <div class="menuWheel__item btnAction">Инструкция</div>                    
+                </div>
+
+                <div class="menuWheel__block">
+                    <div class="menuWheel__item btnAction">Сохранить как...</div>
+                    <div class="menuWheel__item btnAction">Поедлиться</div>
+                    <div class="menuWheel__item btnAction">Распечатать</div>                    
+                </div>
 
             </div>
         </div>
 
 
     </div>
+
+    
 
     <script type="module" src="js/script.js"></script>
 </body>

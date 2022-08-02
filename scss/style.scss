@@ -1,6 +1,7 @@
 @import "_nullstyle";
 
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;700&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
 
 // colors
 $clr_black: #19191c;
@@ -12,13 +13,33 @@ $clr_pinkLight: #ed61ca;
 // margin
 $mg_main: 10%;
 
+%main_border {
+    border: 1px solid #000;
+    border-radius: 4px;           
+}
+
+@mixin bdInside($clr, $width){
+    Box-shadow:0px $width 0px $clr,
+    0px 0-$width 0px $clr,
+    $width 0px 0px $clr,
+    0-$width 0px 0px $clr;
+    // Box-shadow:0px $width 0px #f00,0px 0-$width 0px #f00,1px 0px 0px #f00,-1px 0px 0px #f00;
+}
+
 * {
     padding: 0;
     margin: 0;
 }
 
+html{
+    height: 100%;
+}
+
 body {
     font-family: 'Manrope', sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .menuHorizontal {
@@ -35,29 +56,18 @@ body {
     }
 }
 
-%main_border {
-    border: 1px solid #000;
-    border-radius: 4px;           
-}
-
-@mixin bdInside($clr, $width){
-    Box-shadow:0px $width 0px $clr,
-    0px 0-$width 0px $clr,
-    $width 0px 0px $clr,
-    0-$width 0px 0px $clr;
-    // Box-shadow:0px $width 0px #f00,0px 0-$width 0px #f00,1px 0px 0px #f00,-1px 0px 0px #f00;
-}
-
 header {
     font-weight: 700;
-    background-color: $clr_black;
-    color: $clr_grey;
+    background-color: white;
+    color: $clr_black;
     width: 100%;
-    height: 40px;
+    height: 45px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 $mg_main;
+    padding: 0 10px;
+    border-bottom: 1px solid $clr_greyDark;
+    flex: 0 0 auto; // todo
 
     &__title {
         font-size: 20px;
@@ -70,77 +80,114 @@ header {
 }
 
 .content {
-    margin: 50px $mg_main;
+//    margin: 50px $mg_main;
     display: flex;
-    justify-content: space-between;
+    flex: 1 0 auto; // todo
+    justify-content: space-between;    
 
-    &__wheel {
-        margin: 0 auto;
+    &__wheel {        
+        margin: auto auto;
+
+        .canvasContainer{
+            
+        }
 
         #wheelBalance {
-            //width: 500px;
-            //height: 500px;
-            @extend %main_border;
-
+            border: 1px solid #000;
         }
     }
 
     &__menu {
+        display: flex;
         width: 250px;
+        height: 100%;
     }
 }
 
 .menuWheel {
+    border-inline: 1px solid $clr_greyDark;
     &__block {
-        padding: 10px;
-        @extend %main_border;
+        padding: 16px 16px;
+        // @extend %main_border;
+        border-bottom: 1px solid $clr_greyDark;
+
+        .subtitle{
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800; 
+            color: $clr_black;
+            text-transform: uppercase;
+        }
     }
 
     &__item {
         //padding: 3px 0;
-        margin: 4px 0px;
+        margin: 12px 0px;
+
+        &:first-child{
+            margin-top: 0;
+        }
+        &:last-child{
+            margin-bottom: 0;
+        }
     }
 }
 
-.sectorInfo {
-    &__color {
-        display: block;
-        background: $clr_pinkLight left no-repeat;
-        height: 16px;
-        width: 16px;
-        border-radius: 50%;
-    }
+.btnAction {
+    font-weight: 700;
 
-    &__name {}
-
-    &__score {
-        color: $clr_greyDark;
+    &:hover{
+        background-color: $clr_greyMiddle;
     }
 }
+
+
+
+
+// .sectorInfo {
+//     &__color {
+//         display: block;
+//         background: $clr_pinkLight left no-repeat;
+//         height: 16px;
+//         width: 16px;
+//         border-radius: 50%;
+//     }
+
+//     &__name {}
+
+//     &__score {
+//         color: $clr_greyDark;
+//     }
+// }
 
 .btnMain {
-    @extend %main_border;
     display: inline-block;
-    background-color: $clr_grey;
-    text-transform: uppercase;
-    //font-weight: 600;
-    letter-spacing: 0.25px;
-    color: $clr_black;
-    font-weight: 700px;
+    text-transform: uppercase;   
+    font-weight: 700px;    
     vertical-align: middle;
-    padding: 3px 6px 2px 6px;
+    //padding: 3px 4px;    
     cursor: default;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;           
+    letter-spacing: 0.5px; 
+    color: #5B5B5B;
+    transition-duration: 0.5s;
+    font-size: 14px;
 
-    &:hover {
-        background-color: $clr_pinkLight;
+    &:hover {               
+        //background-color: $clr_grey;
+        //@include bdInside($clr_greyMiddle, 1px); 
+        //border-radius: 2px;      
+        color: $clr_black;  
     }
 
     p {
+        vertical-align: middle;
+
         &::before {
             content: "+";
-            font-size: 20px;
+            font-size: 14px;
             vertical-align: middle;
-            margin-right: 3px;
+            margin-right: 5px;
         }
     }
 
@@ -187,10 +234,7 @@ header {
     td:first-child {
         display: block;
         text-align: center;
-        margin: 5px 4px;
-        // margin-top: 4px;
-        // margin-right: 4px;
-        // margin-left: 4px;        
+        margin: 5px 4px 5px 0px; 
         white-space: nowrap;
 
         &:hover{
@@ -244,3 +288,8 @@ header {
         }
     }
 }
+
+footer{
+    /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
+    flex: 0 0 auto;
+ }
