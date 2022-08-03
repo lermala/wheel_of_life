@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lifa balance</title>
+    <title>Life balance</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-
     <header class="header">
-        <div class="header__title">Инструменты личной эффективности</div>
+        <div class="header__title">mytools — personal balance tools</div>
         <div class="header__menu menuHorizontal">
             <ul>
                 <li>Колесо баланса</li>
@@ -71,10 +70,23 @@
                         <span>Делений</span>
                         <input min="1" max="20" type="number" name="maxScore" id="maxScore">                        
                     </div>
-                    <div class="menuWheel__item containerHorizontal">                        
+                    <div class="menuWheel__item containerVertical">                        
                         <span>Палитра</span>
-                        <div class="palette">
+                        <!-- <select name="slc_palette" id="slc_palette">
+                            <option disabled>Выберите палитру</option>
+                            <option value="1"><div class="palette"></div></option> 
+                        </select> -->
+                        <div class="select">
+                            <div class="select__header">
+                                <span class="select__current"></span>
+                                <div class="select__icon"></div>      
+                            </div>          
+                            <div class="select__body">
+                                <!-- <div value="0" class="select__item"><div class="palette"></div></div>
+                                <div class="select__item"><div class="palette"></div></div> -->
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
 

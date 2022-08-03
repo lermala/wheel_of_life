@@ -61,7 +61,7 @@ export class BalanceWheel {
         let lastId = -1;
         if (this.sectors.length > 0) lastId = this.sectors[this.sectors.length - 1].id;
         sector.id = lastId + 1;
-        sector.color = this.palette.colors[(lastId + 1) % (this.palette.colors.length - 1)];
+        sector.color = this.palette.colors[(lastId + 1) % (this.palette.colors.length)];
         this.sectors.push(sector);
     }
 
@@ -85,12 +85,13 @@ export class BalanceWheel {
         });
     }
 
-    applyPalette(palette) {
+    changePalette(palette) {
         this.palette = palette;
+        console.log(palette);
         this.sectors.forEach((element, index) => {
-            sector.color = palette.colors[(index) % (this.palette.colors.length - 1)];
+            const colorId = (index) % (palette.colors.length);
+            element.color = palette.colors[colorId];
         });
-
     }
 
 }

@@ -245,8 +245,9 @@ export function drawMenu() {
     menuWheel.updateData(balanceWheel.sectors);
     menuWheel.drawSectors();
     menuWheel.setParamerers(balanceWheel); // defauul parameters 
-    console.log(paletteService.palettes[0]);   
-    menuWheel.drawPallete(balanceWheel.palette); // todo 
+    console.log(paletteService.palettes[0]);
+    // menuWheel.drawPallete(balanceWheel.palette); // todo 
+
     // menuWheel.getParameters(balanceWheel);
     menuWheel.getParameters(balanceWheel, () => {
         // menuWheel.recount();
@@ -254,11 +255,15 @@ export function drawMenu() {
         menuWheel.updateAllMaxScore(balanceWheel.maxScore);
         updateCanvas();
     });
-    
+
     // drawAll(); // todo delete
+
+    // list
+    menuWheel.drawPalleteList(paletteService);
+    menuWheel.createSelect((curPaletteId) => changePalette(curPaletteId));
 }
 
-function applyPalette(){
+function applyPalette() {
 
 }
 
@@ -284,4 +289,12 @@ function changeSector(id, newName) {
 function updateScore(id, score) {
     balanceWheel.sectors[id].score = score;
     menuWheel.updateScore(id, score);
+}
+
+function changePalette(curPaletteId) {
+    console.log("curPaletteId=" + curPaletteId);
+    balanceWheel.changePalette(paletteService.palettes[curPaletteId]); // todo
+    menuWheel.drawSectors();
+    updateCanvas();
+    console.log(balanceWheel);
 }

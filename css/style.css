@@ -157,7 +157,7 @@ body {
 
 .palette {
   display: flex;
-  height: 24px;
+  height: 16px;
   direction: row;
 }
 .palette__color {
@@ -172,9 +172,52 @@ body {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
-.palette:hover {
-  Box-shadow: 0px 1px 0px #8d9496, 0px -1px 0px #8d9496, 1px 0px 0px #8d9496, -1px 0px 0px #8d9496;
-  border-radius: 4px;
+.select {
+  font-size: 14px;
+  position: relative;
+}
+.select__header {
+  display: flex;
+  height: 24px;
+  Box-shadow: 0px 1px 0px #bdc2c4, 0px -1px 0px #bdc2c4, 1px 0px 0px #bdc2c4, -1px 0px 0px #bdc2c4;
+}
+.select__header:hover {
+  Box-shadow: 0px 1px 0px #bdc2c4, 0px -1px 0px #bdc2c4, 1px 0px 0px #bdc2c4, -1px 0px 0px #bdc2c4;
+}
+.is-active .select__body {
+  display: block;
+}
+.select__current {
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+}
+.select__icon {
+  width: 26px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background: no-repeat center/55% url("../img/ic_arrow_bot.png");
+  justify-content: flex-end;
+  flex-shrink: 0;
+  color: #19191c;
+  border-left: 1px solid #bdc2c4;
+}
+.select__body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  Box-shadow: 0px 1px 0px #bdc2c4, 0px -1px 0px #bdc2c4, 1px 0px 0px #bdc2c4, -1px 0px 0px #bdc2c4;
+  display: none;
+}
+.select__item {
+  padding: 6px 30px 4px 4px;
+  background-color: white;
+}
+.select__item:hover {
+  background-color: #f3f3f3;
 }
 
 .menuWheel {

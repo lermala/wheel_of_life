@@ -9,6 +9,13 @@ $clr_grey: #f3f3f3;
 $clr_greyMiddle: #bdc2c4;
 $clr_greyDark: #8d9496;
 $clr_pinkLight: #ed61ca;
+$clr_mandarin: #e74d3b;
+$clr_mandarinDark: #b94d3b;
+$clr_mandarinLight: #cf6957;
+$clr_blue: #0c8ce9;
+
+$clr_accent: $clr_mandarin;
+$clr_components-hover: $clr_blue;
 
 // margin
 $mg_main: 10%;
@@ -106,8 +113,9 @@ body {
 
 .palette {        
     display: flex;    
-    height: 24px;    
+    height: 16px;    
     direction: row;
+    // border: 1px solid #000;
     
     &__color {
         $bd-radius: 4px;
@@ -124,10 +132,68 @@ body {
     }
 
     &:hover{
-        @include bdInside($clr_greyDark, 1px);
-        border-radius: 4px;
+        // @include bdInside($clr_greyDark, 1px);
+        // border-radius: 4px;
     }
 }
+
+.select {
+    font-size: 14px;    
+    position: relative;
+    
+    &__header {
+        display: flex;
+        //border: 1px solid $clr_greyMiddle;           
+        
+        height: 16px + 4px*2;
+        @include bdInside($clr_greyMiddle, 1px); 
+
+        &:hover{
+            // border: 1px solid $clr_greyMiddle;   
+            @include bdInside($clr_greyMiddle, 1px); 
+        }
+    }
+    .is-active &__body {
+        display: block;
+    }
+    &__current {       
+        width: 100%;
+        height: 100%;   
+        padding: 4px;
+    }
+
+    &__icon {
+        width: 26px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        background: no-repeat center/55% url("../img/ic_arrow_bot.png");
+        justify-content: flex-end;
+        flex-shrink: 0;
+        color: $clr_black;
+        border-left: 1px solid $clr_greyMiddle;        
+    }
+
+    &__body {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        @include bdInside($clr_greyMiddle, 1px); 
+        // border-top: 0;
+        display: none; // невидим по умолчанию
+    }
+    &__item {
+        padding: 6px 4px+26px 4px 4px;
+        background-color: white;
+
+        &:hover{
+            background-color: $clr_grey;
+        }
+    }
+}
+
 
 .menuWheel {
     border-inline: 1px solid $clr_greyDark;

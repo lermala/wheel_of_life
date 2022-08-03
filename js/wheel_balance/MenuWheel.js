@@ -33,8 +33,6 @@ export class MenuWheel {
         this.clearSectors();
         this.sectors.forEach((el) => {
             this.addSector(el, this.toChange, this.toDelete); // draw
-            // this.addSectorEvents(toChange, toDelete);
-            console.log(el);
         });
     }
 
@@ -92,28 +90,28 @@ export class MenuWheel {
         this.updateDOM();
     }
 
-    updateScore(id, newScore) {        
+    updateScore(id, newScore) {
         const sectorRow = this.getSectorRow(id);
         const sectorTd = sectorRow.querySelectorAll('td')[this.COL_SCORE_ID]; // todo
-    
+
         // updating sector
         sectorTd.textContent = newScore;
     }
 
-    updateAllMaxScore(newScore) {       
+    updateAllMaxScore(newScore) {
         this.SECTORS_TRS.forEach(el => {
             const tdMaxScore = el.querySelectorAll('td')[this.COL_MAXSCORE_ID];
             tdMaxScore.textContent = "/" + newScore;
-        });        
+        });
     }
 
-    focusLastInput(){        
+    focusLastInput() {
         const sectorRow = this.getSectorRow(this.sectors.length - 1);
         const sectorTd = sectorRow.querySelectorAll('td')[this.COL_NAME_ID];
         sectorTd.querySelector('input').focus();
     }
 
-    getSectorRow(id) {        
+    getSectorRow(id) {
         return this.SECTORS_TABLE.querySelectorAll('tr')[id];
     }
 
@@ -121,11 +119,16 @@ export class MenuWheel {
         this.SECTORS_TRS.forEach(element => element.remove());
     }
 
-    setParamerers(balanceWheel){
+    setParamerers(balanceWheel) {
         const circle_chb = document.querySelector('#circles');
         circle_chb.checked = balanceWheel.areCirclesShown;
         const maxScore_inp = document.querySelector('#maxScore');
         maxScore_inp.value = balanceWheel.maxScore;
+        
+        // setting palette
+        let currentPalette = document.querySelector('.select').querySelector('.select__current');        
+        currentPalette.appendChild(this.createPalette(balanceWheel.palette));        
+        currentPalette.value = balanceWheel.palette.id;         
     }
 
     getParameters(balanceWheel, action) {
@@ -133,39 +136,90 @@ export class MenuWheel {
         circle_chb.addEventListener('change', function () {
             balanceWheel.areCirclesShown = circle_chb.checked;
             action();
-        }); 
+        });
 
         const titles_chb = document.querySelector('#titles');
         titles_chb.addEventListener('change', function () {
             balanceWheel.areTitlesShown = titles_chb.checked;
             action();
-        }); 
+        });
 
         const maxScore_inp = document.querySelector('#maxScore');
         maxScore_inp.addEventListener('change', function () {
             // balanceWheel.maxScore = maxScore_inp.value;   
             balanceWheel.updateMaxScore(maxScore_inp.value);
             action();
-        }); 
+        });
     }
 
-    drawPallete(palette){
+    drawPallete(palette) {
+        const paletteInp = document.querySelector('.slc_palette');
         const paletteBlock = document.querySelector('.palette');
-        paletteBlock.addEventListener('click', function() {
-            console.log("girgirjgrg");
-        });
+        // paletteBlock.addEventListener('click', function() {
+        //     console.log("girgirjgrg");
+        // });
         // palette.colors.forEach(el => {
         //     const colorBlock = document.createElement('div');
         //     colorBlock.className = 'palette__color';            
         //     colorBlock.style.background = el;
         //     paletteBlock.appendChild(colorBlock);
         // });
-        for (let i = 0; i < 6; i++){
+        for (let i = 0; i < 6; i++) {
             const colorBlock = document.createElement('div');
-            colorBlock.className = 'palette__color';            
+            colorBlock.className = 'palette__color';
             colorBlock.style.background = palette.colors[i];
-            paletteBlock.appendChild(colorBlock);            
+            paletteBlock.appendChild(colorBlock);
         }
+    }
+
+    drawPalleteList(paletteService, action) {
+        const select = document.querySelector('.select');
+        const selectBody = select.querySelector('.select__body');        
+
+        for (let i = 0; i < paletteService.palettes.length; i++) {
+            var opt = document.createElement('div');
+            opt.className = "select__item";
+            const palleteBlock = this.createPalette(paletteService.palettes[i]);
+            opt.appendChild(palleteBlock);
+            selectBody.appendChild(opt);
+        }        
+    }
+
+    createPalette(palette) {
+        const paletteBlock = document.createElement('div');
+        paletteBlock.className = 'palette';
+        console.log("paletteBlock");
+        console.log(palette.colors.length);
+        for (let i = 0; i < palette.colors.length; i++) {
+            const colorBlock = document.createElement('div');
+            colorBlock.className = 'palette__color';
+            colorBlock.style.background = palette.colors[i];
+            paletteBlock.appendChild(colorBlock);
+        }
+        return paletteBlock;
+    }
+
+    createSelect(action) {
+        let selectHeader = document.querySelectorAll('.select__header');
+        let selectItem = document.querySelectorAll('.select__item');
+
+        selectHeader.forEach(it => {            
+            it.addEventListener('click', function () {
+                this.parentElement.classList.toggle('is-active');
+            });
+        });
+        selectItem.forEach((it, index) => {
+            it.addEventListener('click', function () {
+                let clickedPalette = this.querySelector(".palette");
+                let currentPalette = this.closest('.select').querySelector('.select__current');
+                currentPalette.querySelector('.palette').remove();
+                currentPalette.appendChild(clickedPalette.cloneNode(true));
+                this.closest('.select').classList.remove('is-active'); // closing
+                currentPalette.value = index;
+                console.log(currentPalette.value);
+                action(currentPalette.value);
+            });
+        });
     }
 
     updateDOM() {
