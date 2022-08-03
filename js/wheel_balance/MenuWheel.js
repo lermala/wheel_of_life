@@ -92,12 +92,6 @@ export class MenuWheel {
         this.updateDOM();
     }
 
-    focusLastInput(){        
-        const sectorRow = this.getSectorRow(this.sectors.length - 1);
-        const sectorTd = sectorRow.querySelectorAll('td')[this.COL_NAME_ID];
-        sectorTd.querySelector('input').focus();
-    }
-
     updateScore(id, newScore) {        
         const sectorRow = this.getSectorRow(id);
         const sectorTd = sectorRow.querySelectorAll('td')[this.COL_SCORE_ID]; // todo
@@ -106,12 +100,72 @@ export class MenuWheel {
         sectorTd.textContent = newScore;
     }
 
+    updateAllMaxScore(newScore) {       
+        this.SECTORS_TRS.forEach(el => {
+            const tdMaxScore = el.querySelectorAll('td')[this.COL_MAXSCORE_ID];
+            tdMaxScore.textContent = "/" + newScore;
+        });        
+    }
+
+    focusLastInput(){        
+        const sectorRow = this.getSectorRow(this.sectors.length - 1);
+        const sectorTd = sectorRow.querySelectorAll('td')[this.COL_NAME_ID];
+        sectorTd.querySelector('input').focus();
+    }
+
     getSectorRow(id) {        
         return this.SECTORS_TABLE.querySelectorAll('tr')[id];
     }
 
     clearSectors() {
         this.SECTORS_TRS.forEach(element => element.remove());
+    }
+
+    setParamerers(balanceWheel){
+        const circle_chb = document.querySelector('#circles');
+        circle_chb.checked = balanceWheel.areCirclesShown;
+        const maxScore_inp = document.querySelector('#maxScore');
+        maxScore_inp.value = balanceWheel.maxScore;
+    }
+
+    getParameters(balanceWheel, action) {
+        const circle_chb = document.querySelector('#circles');
+        circle_chb.addEventListener('change', function () {
+            balanceWheel.areCirclesShown = circle_chb.checked;
+            action();
+        }); 
+
+        const titles_chb = document.querySelector('#titles');
+        titles_chb.addEventListener('change', function () {
+            balanceWheel.areTitlesShown = titles_chb.checked;
+            action();
+        }); 
+
+        const maxScore_inp = document.querySelector('#maxScore');
+        maxScore_inp.addEventListener('change', function () {
+            // balanceWheel.maxScore = maxScore_inp.value;   
+            balanceWheel.updateMaxScore(maxScore_inp.value);
+            action();
+        }); 
+    }
+
+    drawPallete(palette){
+        const paletteBlock = document.querySelector('.palette');
+        paletteBlock.addEventListener('click', function() {
+            console.log("girgirjgrg");
+        });
+        // palette.colors.forEach(el => {
+        //     const colorBlock = document.createElement('div');
+        //     colorBlock.className = 'palette__color';            
+        //     colorBlock.style.background = el;
+        //     paletteBlock.appendChild(colorBlock);
+        // });
+        for (let i = 0; i < 6; i++){
+            const colorBlock = document.createElement('div');
+            colorBlock.className = 'palette__color';            
+            colorBlock.style.background = palette.colors[i];
+            paletteBlock.appendChild(colorBlock);            
+        }
     }
 
     updateDOM() {

@@ -2,7 +2,7 @@ import { Sector } from './Sector.js'
 import { BalanceWheel } from './Wheel.js'
 // import { addSectorToMenu, updateScoreInMenu, redrawSectors, deleteSectorFromMenu, addEventForSectorName, addEventForSectorBtn } from './menu.js'
 import { MenuWheel } from './MenuWheel.js'
-import { updateScoreInMenu } from './menu.js';
+import { Palette, PaletteService } from './Palette.js';
 
 // Получение элемента canvas, контекста и свойства Math.PI
 var canvas = document.getElementById('wheelBalance');
@@ -14,37 +14,37 @@ const CANVAS_W = parseInt(canvas.getAttribute("width")); // todo
 const CENTER_X = CANVAS_W / 2;
 const CENTER_Y = CANVAS_W / 2;
 
-// wheel info
-var balanceWheel = new BalanceWheel({}); // дефолтное колесо
-
 // visual style
 const LINE_WIDTH = 1; // толщина обводки
 const STROKE_STYLE = "#8d9496"; // цвет обводки
 const FILL_STYLE = "#ed61ca";
+const paletteService = new PaletteService(); // todo
 
+// wheel info
+var balanceWheel = new BalanceWheel({
+    palette: paletteService.palettes[2], // todo
+}); // дефолтное колесо
 
 // DRAWING
 export function drawAll() {
+    clearCanvas(); // todo
     ctx.beginPath();
     ctx.lineWidth = LINE_WIDTH;
     ctx.strokeStyle = STROKE_STYLE;
     ctx.fillStyle = FILL_STYLE;
 
     drawAllSectors();
-    drawAllWheels();
+    if (balanceWheel.areCirclesShown) drawAllWheels();
+    if (balanceWheel.areTitlesShown) drawText();
 }
 
 function drawAllSectors() {
-    // addBlock();     
     balanceWheel.sectors.forEach(function (value, i) {
         drawSector(
             balanceWheel.radius * value.score,
             i * balanceWheel.sectorDegrees,
             value.color
         );
-        // drawText(value.name, 10, 40); // todo 
-        // addSector(value, balanceWheel.maxScore);
-
     });
 }
 
@@ -74,19 +74,30 @@ function drawSector(radius, start, color) {
     ctx.stroke();
 }
 
-function drawText(txt, x, y) {
-    ctx.save();
-    // ctx.rotate(SECTORS_DEGREES / 2);
-    // ctx.translate(SECTORS_DEGREES, SECTORS_DEGREES);
+function drawText() {
+    balanceWheel.sectors.forEach(function (value, i) {
+        ctx.save();
+        // context.translate(newx, newy);
+        //ctx.rotate(-Math.PI/2);
+        // ctx.rotate(Math.PI*2 / (i*6));
+        ctx.font = 'bold 16px sans-serif'; // set font
+        ctx.textAlign = 'left';          // align text in center
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = 'black';
 
-    ctx.translate(0, 0);
-    ctx.translate(0, balanceWheel.maxRadius);
-    ctx.font = "18px Verdana";
-    ctx.fillStyle = "black";
-    ctx.fillText(txt, CENTER_X, CENTER_Y);
+        const cx = CENTER_X;
 
 
-    ctx.restore();
+        ctx.translate(CENTER_X, CENTER_Y);
+        ctx.rotate(i * (balanceWheel.sectorDegrees));
+        ctx.rotate((balanceWheel.sectorDegrees / 2));
+        ctx.translate(-CENTER_X, -CENTER_Y);       // translate back        
+        ctx.fillText("\t\t\t\t\t\t\t\t\t" + value.name, CENTER_X, CENTER_Y);
+
+
+
+        ctx.restore();
+    });
 }
 
 function updateCanvas() {
@@ -190,7 +201,7 @@ function findHoveredScore(distanceFromCentre) {
 // при наведении мыши предпросмотр нового сектора
 // после отпуска мыши возврат к исх. состоянию
 function previewSectors() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // todo clear    
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // todo clear       
     balanceWheel.sectors.forEach(function (value, i) {
         if (i + 1 == curSector) {
             drawSector(
@@ -207,7 +218,10 @@ function previewSectors() {
         }
     });
 
-    drawAllWheels(); // todo
+    // drawAll(); 
+    // drawAllSectors();
+    if (balanceWheel.areCirclesShown) drawAllWheels();
+    if (balanceWheel.areTitlesShown) drawText();
 }
 
 // возврат к состоянию из массива (очистка превью)
@@ -229,12 +243,24 @@ const menuWheel = new MenuWheel({
 export function drawMenu() {
     menuWheel.updateDOM();
     menuWheel.updateData(balanceWheel.sectors);
-    menuWheel.drawSectors(
-        // (id, newName) => changeSector(id, newName),
-        // (id) => deleteSector(id)
-    );
+    menuWheel.drawSectors();
+    menuWheel.setParamerers(balanceWheel); // defauul parameters 
+    console.log(paletteService.palettes[0]);   
+    menuWheel.drawPallete(balanceWheel.palette); // todo 
+    // menuWheel.getParameters(balanceWheel);
+    menuWheel.getParameters(balanceWheel, () => {
+        // menuWheel.recount();
+        menuWheel.drawSectors();
+        menuWheel.updateAllMaxScore(balanceWheel.maxScore);
+        updateCanvas();
+    });
+    
+    // drawAll(); // todo delete
 }
 
+function applyPalette(){
+
+}
 
 export function addSector() {
     balanceWheel.addSector(new Sector({})); // todo     
@@ -256,10 +282,6 @@ function changeSector(id, newName) {
 }
 
 function updateScore(id, score) {
-    balanceWheel.sectors[id].score = score;    
+    balanceWheel.sectors[id].score = score;
     menuWheel.updateScore(id, score);
 }
-
-
-
-

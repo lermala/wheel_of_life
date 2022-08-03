@@ -70,7 +70,7 @@ export function addSectorToMenu(sector, maxScore) {
     tableSectors.appendChild(rowSector);
 }
 
-export function updateAllMaxScore(maxScore) {
+export function updateAllMaxScore1(maxScore) {
     const tableSectors = document.querySelector('.tableSectors');
 
     tableSectors.querySelectorAll('tr').forEach(el => {
