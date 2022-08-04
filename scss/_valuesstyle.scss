@@ -1,0 +1,66 @@
+// @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
+
+// colors
+$clr_black: #19191c;
+$clr_grey: #eee;
+$clr_greyMiddle: #b2b5b6;
+$clr_greyDark: #85898a;
+$clr_pinkLight: #ed61ca;
+$clr_mandarin: #e74d3b;
+$clr_mandarinDark: #b94d3b;
+$clr_mandarinLight: #cf6957;
+$clr_blue: #0c8ce9;
+
+$clr_accent: $clr_mandarin;
+$clr_components-hover: $clr_blue;
+
+// margin
+$mg_main: 10%;
+$pd_components: 8px 16px;
+
+$bd-radius: 4px;
+
+@mixin bdInside($clr, $width) {
+    Box-shadow: 0px $width 0px $clr,
+        0px 0-$width 0px $clr,
+        $width 0px 0px $clr,
+        0-$width 0px 0px $clr;
+}
+
+@mixin bdInsideCustom($clr, $top, $right, $bot, $left) {
+    Box-shadow: 0px $top 0px $clr,
+        0px 0-$right 0px $clr,
+        $bot 0px 0px $clr,
+        0-$left 0px 0px $clr;
+}
+
+// effects
+%ef_default_component {
+    padding: $pd_components;
+    //@include bdInside($clr_grey, 1px);
+    //border-radius: $bd-radius;
+    transition: all .6s;
+}
+
+%ef_hover_component {
+
+    // padding: $pd_components;
+    // transition: all .6s;
+    &:hover {
+        // @include bdInside($clr_greyDark, 1px);
+        background: $clr_grey;
+        border-radius: $bd-radius;
+    }
+}
+
+%ef_active_component {
+    @include bdInside($clr_accent, 2px);
+    border-radius: $bd-radius;
+    background: white;
+}
+
+%main_border {
+    border: 1px solid #000;
+    border-radius: 4px;
+}

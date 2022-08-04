@@ -1,0 +1,162 @@
+.select {
+    position: relative;
+
+    &__header {
+        display: flex;
+        height: 16px;
+    }
+
+    .is-active &__body {
+        display: block;
+        margin-top: 8px;
+    }
+
+    &__current {
+        width: 100%;
+        height: 100%;
+        // padding: 4px 0px 4px 4px;
+        //border: 1px solid #000;
+    }
+
+    &__icon {
+        width: 22px;
+        //padding: 0;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        background: no-repeat center/60% url("../img/ic_arrow_bot.png");
+        justify-content: flex-end;
+        flex-shrink: 0;
+        //color: $clr_black;
+        //border-left: 1px solid $clr_greyMiddle;
+    }
+
+    &__body {
+        position: absolute;
+        left: 0;
+        right: 0;
+        //top: 100%;
+        top: -100%; // поверх блока
+        @include bdInside($clr_greyMiddle, 1px);
+        // border-top: 0;
+        display: none; // невидим по умолчанию
+        z-index: 999999;
+    }
+
+    &__item_active,
+    &__item {
+        padding: 10px 10px+16px 10px 10px;
+        background-color: white;
+        @extend %ef_hover_component;
+    }
+
+    &__item_active {
+        padding: 10px 0px 10px 10px;
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        .palette::after {
+            content: "";
+            background: url("../img/ic_check.png") no-repeat 50% 50% / 1em 1em;
+            width: 16px;
+            height: 16px;
+            margin: 0 5px;
+            // border: 1px solid #000;
+        }
+    }
+}
+
+.btnAction {
+    font-weight: 700;
+}
+
+.btnMain {
+    display: block;
+    text-transform: uppercase;
+    font-weight: 700px;  
+    cursor: default;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #5B5B5B;
+    transition-duration: 0.5s;
+    font-size: 14px;
+    padding: $pd_components;
+    
+
+    &:hover {
+        //background-color: $clr_greyMiddle;
+        //@include bdInside($clr_greyMiddle, 1px); 
+        border-radius: 0px;      
+        color: $clr_black;
+    }
+
+    p {
+        vertical-align: middle;
+
+        &::before {
+            content: "+";
+            font-size: 18px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+    }
+}
+
+input[id^="spoiler"] {
+    display: none; // скрываем чекбокс    
+
+    &+label {
+        // заголовок 
+        // @extend %ef_default_component; 
+        display: block;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        font-weight: 700;
+
+        &::after {
+            content: "";
+            background: url("../img/ic_arrow_bot.png") no-repeat 50% 50% / 1em 1em;
+            width: 1em;
+            height: 1em;
+            margin-left: 4px;
+            position: absolute;
+            transition: transform .5s;
+        }
+    }
+
+    &:checked+label {
+        // открытый спойлер        
+        // @extend %ef_active_component;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        &+.spoiler {
+            // контент спойлера
+            height: auto;
+            display: inline-block; // скрываем чекбокс           
+        }
+
+        &::after {
+            content: "";
+            background: url("../img/ic_arrow_right.png") no-repeat 50% 50% / 1em 1em;
+        }
+    }
+
+    &~.spoiler {
+        height: 0;
+        width: 100%;
+        overflow: hidden;
+        //opacity: 0; 
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid $clr_greyMiddle;
+        display: none; // скрываем       
+        // @extend %ef_active_component;          
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        transition: all .6s;
+    }
+}

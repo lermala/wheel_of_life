@@ -101,88 +101,6 @@ h6 {
   border-radius: 4px;
 }
 
-* {
-  padding: 0;
-  margin: 0;
-}
-
-html {
-  height: 100%;
-}
-
-body {
-  font-family: "Manrope", sans-serif;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.header {
-  font-weight: 700;
-  background-color: #19191c;
-  color: #b2b5b6;
-  width: 100%;
-  height: 45px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 10px;
-  border-bottom: 1px solid #85898a;
-  flex: 0 0 auto;
-}
-.header__title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #eee;
-  word-spacing: 3px;
-  font-family: "Manrope", sans-serif;
-}
-.header .menuHorizontal > ul {
-  display: flex;
-}
-.header .menuHorizontal > ul > li {
-  margin-right: 20px;
-}
-.header .menuHorizontal > ul > li:last-child {
-  margin-right: 0px;
-}
-
-.content {
-  display: flex;
-  flex: 1 0 auto;
-  justify-content: space-between;
-}
-.content__wheel {
-  margin: 0px auto;
-  padding: 20px 0px;
-}
-.content__wheel #wheelBalance {
-  border: 1px solid #000;
-}
-.content__menu {
-  display: flex;
-  width: 280px;
-  height: 100%;
-}
-
-.palette {
-  display: flex;
-  height: 18px;
-  direction: row;
-}
-.palette__color {
-  flex: 1 0 auto;
-  height: 100%;
-}
-.palette__color:first-child {
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-.palette__color:last-child {
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-
 .select {
   position: relative;
 }
@@ -232,6 +150,99 @@ body {
   width: 16px;
   height: 16px;
   margin: 0 5px;
+}
+
+.btnAction {
+  font-weight: 700;
+}
+
+.btnMain {
+  display: block;
+  text-transform: uppercase;
+  font-weight: 700px;
+  cursor: default;
+  font-family: "Manrope", sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #5B5B5B;
+  transition-duration: 0.5s;
+  font-size: 14px;
+  padding: 8px 16px;
+}
+.btnMain:hover {
+  border-radius: 0px;
+  color: #19191c;
+}
+.btnMain p {
+  vertical-align: middle;
+}
+.btnMain p::before {
+  content: "+";
+  font-size: 18px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+input[id^=spoiler] {
+  display: none;
+}
+input[id^=spoiler] + label {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  font-weight: 700;
+}
+input[id^=spoiler] + label::after {
+  content: "";
+  background: url("../img/ic_arrow_bot.png") no-repeat 50% 50%/1em 1em;
+  width: 1em;
+  height: 1em;
+  margin-left: 4px;
+  position: absolute;
+  transition: transform 0.5s;
+}
+input[id^=spoiler]:checked + label {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+input[id^=spoiler]:checked + label + .spoiler {
+  height: auto;
+  display: inline-block;
+}
+input[id^=spoiler]:checked + label::after {
+  content: "";
+  background: url("../img/ic_arrow_right.png") no-repeat 50% 50%/1em 1em;
+}
+input[id^=spoiler] ~ .spoiler {
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #b2b5b6;
+  display: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  transition: all 0.6s;
+}
+
+.palette {
+  display: flex;
+  height: 18px;
+  direction: row;
+}
+.palette__color {
+  flex: 1 0 auto;
+  height: 100%;
+}
+.palette__color:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.palette__color:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .menuWheel {
@@ -307,10 +318,6 @@ body {
   margin-bottom: 0;
 }
 
-.btnAction {
-  font-weight: 700;
-}
-
 .btnSquare {
   display: table;
   width: 28px;
@@ -324,33 +331,6 @@ body {
 .btnSquare:hover {
   background-color: #b2b5b6;
   border-radius: 4px;
-}
-
-.btnMain {
-  display: block;
-  text-transform: uppercase;
-  font-weight: 700px;
-  cursor: default;
-  font-family: "Manrope", sans-serif;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  color: #5B5B5B;
-  transition-duration: 0.5s;
-  font-size: 14px;
-  padding: 8px 16px;
-}
-.btnMain:hover {
-  border-radius: 0px;
-  color: #19191c;
-}
-.btnMain p {
-  vertical-align: middle;
-}
-.btnMain p::before {
-  content: "+";
-  font-size: 18px;
-  vertical-align: middle;
-  margin-right: 5px;
 }
 
 .coloredCircle {
@@ -417,51 +397,71 @@ body {
   padding-right: 6px;
 }
 
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  font-weight: 700;
+  background-color: #19191c;
+  color: #b2b5b6;
+  width: 100%;
+  height: 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  border-bottom: 1px solid #85898a;
+  flex: 0 0 auto;
+}
+.header__title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #eee;
+  word-spacing: 3px;
+  font-family: "Manrope", sans-serif;
+}
+.header .menuHorizontal > ul {
+  display: flex;
+}
+.header .menuHorizontal > ul > li {
+  margin-right: 20px;
+}
+.header .menuHorizontal > ul > li:last-child {
+  margin-right: 0px;
+}
+
+.content {
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: space-between;
+}
+.content__wheel {
+  margin: 0px auto;
+  padding: 20px 0px;
+}
+.content__wheel #wheelBalance {
+  border: 1px solid #000;
+}
+.content__menu {
+  display: flex;
+  width: 280px;
+  height: 100%;
+}
+
 footer {
   /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
   flex: 0 0 auto;
-}
-
-input[id^=spoiler] {
-  display: none;
-}
-input[id^=spoiler] + label {
-  display: block;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  font-weight: 700;
-}
-input[id^=spoiler] + label::after {
-  content: "";
-  background: url("../img/ic_arrow_bot.png") no-repeat 50% 50%/1em 1em;
-  width: 1em;
-  height: 1em;
-  margin-left: 4px;
-  position: absolute;
-  transition: transform 0.5s;
-}
-input[id^=spoiler]:checked + label {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-input[id^=spoiler]:checked + label + .spoiler {
-  height: auto;
-  display: inline-block;
-}
-input[id^=spoiler]:checked + label::after {
-  content: "";
-  background: url("../img/ic_arrow_right.png") no-repeat 50% 50%/1em 1em;
-}
-input[id^=spoiler] ~ .spoiler {
-  height: 0;
-  width: 100%;
-  overflow: hidden;
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #b2b5b6;
-  display: none;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  transition: all 0.6s;
 }
