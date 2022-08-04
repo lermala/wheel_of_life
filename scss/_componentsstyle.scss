@@ -104,6 +104,23 @@
     }
 }
 
+.btnSquare {
+    display: table;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+
+    &__content {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    &:hover {
+        background-color: $clr_greyMiddle;
+        border-radius: $bd-radius;
+    }
+}
+
 input[id^="spoiler"] {
     display: none; // скрываем чекбокс    
 

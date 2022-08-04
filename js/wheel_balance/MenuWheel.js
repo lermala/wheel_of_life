@@ -32,8 +32,8 @@ export class MenuWheel {
     drawSectors() {
         this.clearSectors();
         this.sectors.forEach((el) => {
-            this.addSector(el, this.toChange, this.toDelete); // draw
-        });
+            this.addSector(el, this.toChange, this.toDelete); // draw            
+        });        
     }
 
     addSector(sector, toChange, toDelete) {
@@ -111,10 +111,12 @@ export class MenuWheel {
     }
 
     updateAllMaxScore(newScore) {
+        this.maxScore = newScore;
         this.SECTORS_TRS.forEach(el => {
             const tdMaxScore = el.querySelectorAll('td')[this.COL_MAXSCORE_ID];
             tdMaxScore.textContent = "/" + newScore;
         });
+
     }
 
     focusLastInput() {

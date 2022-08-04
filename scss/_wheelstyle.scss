@@ -1,25 +1,3 @@
-.palette {
-    display: flex;
-    height: 18px;
-    direction: row;
-
-    &__color {
-        $bd-radius: 3px;
-        flex: 1 0 auto;
-        height: 100%;
-
-        &:first-child {
-            border-top-left-radius: $bd-radius;
-            border-bottom-left-radius: $bd-radius;
-        }
-
-        &:last-child {
-            border-top-right-radius: $bd-radius;
-            border-bottom-right-radius: $bd-radius;
-        }
-    }
-}
-
 .menuWheel {
     border-inline: 1px solid $clr_greyDark;
     width: 100%;
@@ -75,6 +53,8 @@
                     border-radius: $bd-radius;
                     padding: 2px 2px 2px 4px;
 
+                    @extend %ef_input;
+
                     &::-webkit-inner-spin-button,
                     &::-webkit-outer-spin-button {
                         opacity: 1; // отображаем стрелки
@@ -110,7 +90,6 @@
         }
     }
 
-
     &__item {
         @extend %ef_default_component;
         @extend %ef_hover_component;
@@ -119,27 +98,31 @@
         &:first-child {
             margin-top: 0;
         }
-
         &:last-child {
             margin-bottom: 0;
         }
     }
 }
 
-.btnSquare {
-    display: table;
-    width: 28px;
-    height: 28px;
-    text-align: center;
+.palette {
+    display: flex;
+    height: 18px;
+    direction: row;
 
-    &__content {
-        display: table-cell;
-        vertical-align: middle;
-    }
+    &__color {
+        $bd-radius: 3px;
+        flex: 1 0 auto;
+        height: 100%;
 
-    &:hover {
-        background-color: $clr_greyMiddle;
-        border-radius: $bd-radius;
+        &:first-child {
+            border-top-left-radius: $bd-radius;
+            border-bottom-left-radius: $bd-radius;
+        }
+
+        &:last-child {
+            border-top-right-radius: $bd-radius;
+            border-bottom-right-radius: $bd-radius;
+        }
     }
 }
 
@@ -188,28 +171,13 @@
         font-size: 14px;
         width: 100%;
         text-overflow: ellipsis;
-        //padding: 1px 3px; // todo
-        padding: 2px 4px 2px 4px;
         padding: 4px 8px;
         background-color: transparent;
         cursor: default;
         border: 1px solid transparent;
         border-radius: $bd-radius;
 
-        // font-family: 'Manrope', sans-serif;
-        &:hover {
-            // background-color: $clr_greyMiddle;        
-            // border-radius: $bd-radius;  
-            border: 1px solid $clr_greyMiddle;
-            // @include bdInside($clr_black, 1px);
-        }
-
-        &:focus {
-            //border-radius: 3px;
-            //@include bdInside($clr_black, 1px);
-
-            border: 2px solid $clr_accent
-        }
+        @extend %ef_input;
     }
 
     // color

@@ -304,7 +304,7 @@ function download(canvas, filename) {
 }
 
 export function addSector() {
-    balanceWheel.addSector(new Sector({})); // todo     
+    balanceWheel.addSector(new Sector({})); // todo
     menuWheel.drawSectors();
     menuWheel.focusLastInput();
     updateCanvas();

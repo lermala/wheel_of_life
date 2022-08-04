@@ -101,6 +101,16 @@ h6 {
   border-radius: 4px;
 }
 
+.tableSectors .input-sector, .menuWheel__block:nth-child(2) .containerMaxScore input {
+  border: 1px solid transparent;
+}
+.tableSectors .input-sector:hover, .menuWheel__block:nth-child(2) .containerMaxScore input:hover {
+  border: 1px solid #b2b5b6;
+}
+.tableSectors .input-sector:focus, .menuWheel__block:nth-child(2) .containerMaxScore input:focus {
+  border: 2px solid #0c8ce9;
+}
+
 .select {
   position: relative;
 }
@@ -183,6 +193,21 @@ h6 {
   margin-right: 5px;
 }
 
+.btnSquare {
+  display: table;
+  width: 28px;
+  height: 28px;
+  text-align: center;
+}
+.btnSquare__content {
+  display: table-cell;
+  vertical-align: middle;
+}
+.btnSquare:hover {
+  background-color: #b2b5b6;
+  border-radius: 4px;
+}
+
 input[id^=spoiler] {
   display: none;
 }
@@ -225,24 +250,6 @@ input[id^=spoiler] ~ .spoiler {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   transition: all 0.6s;
-}
-
-.palette {
-  display: flex;
-  height: 18px;
-  direction: row;
-}
-.palette__color {
-  flex: 1 0 auto;
-  height: 100%;
-}
-.palette__color:first-child {
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-.palette__color:last-child {
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
 }
 
 .menuWheel {
@@ -318,19 +325,22 @@ input[id^=spoiler] ~ .spoiler {
   margin-bottom: 0;
 }
 
-.btnSquare {
-  display: table;
-  width: 28px;
-  height: 28px;
-  text-align: center;
+.palette {
+  display: flex;
+  height: 18px;
+  direction: row;
 }
-.btnSquare__content {
-  display: table-cell;
-  vertical-align: middle;
+.palette__color {
+  flex: 1 0 auto;
+  height: 100%;
 }
-.btnSquare:hover {
-  background-color: #b2b5b6;
-  border-radius: 4px;
+.palette__color:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.palette__color:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .coloredCircle {
@@ -354,18 +364,11 @@ input[id^=spoiler] ~ .spoiler {
   font-size: 14px;
   width: 100%;
   text-overflow: ellipsis;
-  padding: 2px 4px 2px 4px;
   padding: 4px 8px;
   background-color: transparent;
   cursor: default;
   border: 1px solid transparent;
   border-radius: 4px;
-}
-.tableSectors .input-sector:hover {
-  border: 1px solid #b2b5b6;
-}
-.tableSectors .input-sector:focus {
-  border: 2px solid #e74d3b;
 }
 .tableSectors td:first-child {
   white-space: nowrap;
