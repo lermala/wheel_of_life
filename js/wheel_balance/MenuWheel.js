@@ -42,8 +42,12 @@ export class MenuWheel {
 
         // цвет
         const tdColor = document.createElement('td');
-        tdColor.className = 'coloredCircle';
-        tdColor.style.background = sector.color;
+        const circle = document.createElement('div');
+        circle.className = 'coloredCircle';
+        circle.style.background = sector.color;
+        // tdColor.className = 'coloredCircle';
+        // tdColor.style.background = sector.color;
+        tdColor.appendChild(circle);
 
         // название
         const tdName = document.createElement('td');
@@ -66,7 +70,15 @@ export class MenuWheel {
 
         // кнопка // todo
         const tdBtn = document.createElement('td');
-        tdBtn.textContent = '—';
+        // tdBtn.textContent = '—';
+        const btnDel = document.createElement('div');
+        btnDel.className = 'btnSquare';
+        const btnDelContent = document.createElement('div');
+        btnDelContent.className = 'btnSquare__content';
+        btnDelContent.textContent = '—';  
+
+        btnDel.appendChild(btnDelContent);
+        tdBtn.appendChild(btnDel);
 
         // вставляем в строку
         rowSector.appendChild(tdColor);
@@ -183,10 +195,15 @@ export class MenuWheel {
     drawPalleteList(paletteService, action) {
         const select = document.querySelector('.select');
         const selectBody = select.querySelector('.select__body');
+        let currentPalette = document.querySelector('.select').querySelector('.select__current');
 
         for (let i = 0; i < paletteService.palettes.length; i++) {
             var opt = document.createElement('div');
             opt.className = "select__item";
+            if (i == currentPalette.value){ // текущий элемент в списке
+                opt.className = "select__item_active";
+            }
+
             const palleteBlock = this.createPalette(paletteService.palettes[i]);
             opt.appendChild(palleteBlock);
             selectBody.appendChild(opt);
@@ -210,24 +227,45 @@ export class MenuWheel {
     createSelect(action) {
         let selectHeader = document.querySelectorAll('.select__header');
         let selectItem = document.querySelectorAll('.select__item');
+        let selectItemActive = document.querySelector('.select__item_active');
+        
+        let selectBody = document.querySelector('.select__body');
+        let items = selectBody.children;
+        console.log(items);
 
         selectHeader.forEach(it => {
             it.addEventListener('click', function () {
                 this.parentElement.classList.toggle('is-active');
             });
         });
-        selectItem.forEach((it, index) => {
-            it.addEventListener('click', function () {
+        // selectItem.forEach((it, index) => {
+        //     it.addEventListener('click', function () {
+        //         let clickedPalette = this.querySelector(".palette");
+        //         let currentPalette = this.closest('.select').querySelector('.select__current');
+        //         currentPalette.querySelector('.palette').remove();
+        //         currentPalette.appendChild(clickedPalette.cloneNode(true));
+        //         this.closest('.select').classList.remove('is-active'); // closing
+        //         currentPalette.value = index;
+        //         console.log(currentPalette.value);
+        //         action(currentPalette.value);
+        //     });
+        // });
+        for (let i = 0; i < items.length; i++){
+            items[i].addEventListener('click', function () {
                 let clickedPalette = this.querySelector(".palette");
                 let currentPalette = this.closest('.select').querySelector('.select__current');
                 currentPalette.querySelector('.palette').remove();
                 currentPalette.appendChild(clickedPalette.cloneNode(true));
-                this.closest('.select').classList.remove('is-active'); // closing
-                currentPalette.value = index;
-                console.log(currentPalette.value);
+                items[currentPalette.value].className = "select__item"; // убираем галочку с предыдущего
+                this.className = "select__item_active"; // ставим галочку                
+
+                currentPalette.value = i;                
                 action(currentPalette.value);
+
+                this.closest('.select').classList.remove('is-active'); // closing
             });
-        });
+        }
+
     }
 
     // Source from:  http://stackoverflow.com/questions/18480474/how-to-save-an-image-from-canvas

@@ -1,13 +1,15 @@
 @import "_nullstyle";
+@import "_wheelstyle";
+@import "_componentsstyle";
 
 // @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
 
 // colors
 $clr_black: #19191c;
-$clr_grey: #f3f3f3;
-$clr_greyMiddle: #bdc2c4;
-$clr_greyDark: #8d9496;
+$clr_grey: #eee;
+$clr_greyMiddle: #b2b5b6;
+$clr_greyDark: #85898a;
 $clr_pinkLight: #ed61ca;
 $clr_mandarin: #e74d3b;
 $clr_mandarinDark: #b94d3b;
@@ -19,21 +21,22 @@ $clr_components-hover: $clr_blue;
 
 // margin
 $mg_main: 10%;
-$pd_components: 10px;
+$pd_components: 8px 16px;
 
-$bd-radius: 3px;
+$bd-radius: 4px;
 
 @mixin bdInside($clr, $width) {
     Box-shadow: 0px $width 0px $clr,
         0px 0-$width 0px $clr,
         $width 0px 0px $clr,
-        0-$width 0px 0px $clr;    
+        0-$width 0px 0px $clr;
 }
+
 @mixin bdInsideCustom($clr, $top, $right, $bot, $left) {
     Box-shadow: 0px $top 0px $clr,
         0px 0-$right 0px $clr,
         $bot 0px 0px $clr,
-        0-$left 0px 0px $clr;    
+        0-$left 0px 0px $clr;
 }
 
 // effects
@@ -41,17 +44,20 @@ $bd-radius: 3px;
     padding: $pd_components;
     //@include bdInside($clr_grey, 1px);
     //border-radius: $bd-radius;
-    transition: all .6s;    
+    transition: all .6s;
 }
+
 %ef_hover_component {
+
     // padding: $pd_components;
     // transition: all .6s;
-    &:hover{
-        @include bdInside($clr_greyDark, 1px);
+    &:hover {
+        // @include bdInside($clr_greyDark, 1px);
         background: $clr_grey;
         border-radius: $bd-radius;
     }
 }
+
 %ef_active_component {
     @include bdInside($clr_accent, 2px);
     border-radius: $bd-radius;
@@ -62,8 +68,6 @@ $bd-radius: 3px;
     border: 1px solid #000;
     border-radius: 4px;
 }
-
-
 
 * {
     padding: 0;
@@ -83,8 +87,8 @@ body {
 
 .header {
     font-weight: 700;
-    background-color: white;
-    color: $clr_black;
+    background-color: $clr_black;
+    color: $clr_greyMiddle;
     width: 100%;
     height: 45px;
     display: flex;
@@ -96,8 +100,8 @@ body {
 
     &__title {
         font-size: 20px;
-        font-weight: 600;
-        color: black;
+        font-weight: 600;        
+        color: $clr_grey;
         word-spacing: 3px;
         font-family: 'Manrope', sans-serif;
     }
@@ -138,19 +142,18 @@ body {
 
     &__menu {
         display: flex;
-        width: 250px;
+        width: 280px;
         height: 100%;
     }
 }
 
 .palette {
     display: flex;
-    height: 16px;
+    height: 18px;
     direction: row;
-    // border: 1px solid #000;
 
     &__color {
-        $bd-radius: 4px;
+        $bd-radius: 3px;
         flex: 1 0 auto;
         height: 100%;
 
@@ -164,85 +167,103 @@ body {
             border-bottom-right-radius: $bd-radius;
         }
     }
-
-    &:hover {
-        // @include bdInside($clr_greyDark, 1px);
-        // border-radius: 4px;
-    }
 }
 
 .select {
-    font-size: 14px;
     position: relative;
 
     &__header {
         display: flex;
-        //border: 1px solid $clr_greyMiddle;           
-
-        height: 16px + 4px*2;
-        @include bdInside($clr_greyMiddle, 1px);
-
-        &:hover {
-            // border: 1px solid $clr_greyMiddle;   
-            @include bdInside($clr_greyMiddle, 1px);
-        }
+        height: 16px;
     }
 
     .is-active &__body {
         display: block;
+        margin-top: 8px;
     }
 
     &__current {
         width: 100%;
         height: 100%;
-        padding: 4px;
+        // padding: 4px 0px 4px 4px;
+        //border: 1px solid #000;
     }
 
     &__icon {
-        width: 26px;
-        padding: 0;
+        width: 22px;
+        //padding: 0;
         display: flex;
         align-items: center;
         text-align: center;
-        background: no-repeat center/55% url("../img/ic_arrow_bot.png");
+        background: no-repeat center/60% url("../img/ic_arrow_bot.png");
         justify-content: flex-end;
         flex-shrink: 0;
-        color: $clr_black;
-        border-left: 1px solid $clr_greyMiddle;
+        //color: $clr_black;
+        //border-left: 1px solid $clr_greyMiddle;
     }
 
     &__body {
         position: absolute;
         left: 0;
         right: 0;
-        top: 100%;
+        //top: 100%;
+        top: -100%; // поверх блока
         @include bdInside($clr_greyMiddle, 1px);
         // border-top: 0;
         display: none; // невидим по умолчанию
+        z-index: 999999;
     }
 
+    &__item_active,
     &__item {
-        padding: 6px 4px+26px 4px 4px;
+        padding: 10px 10px+16px 10px 10px;
         background-color: white;
+        @extend %ef_hover_component;
+    }
 
-        &:hover {
-            background-color: $clr_grey;
+    &__item_active {
+        padding: 10px 0px 10px 10px;
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        .palette::after {
+            content: "";
+            background: url("../img/ic_check.png") no-repeat 50% 50% / 1em 1em;
+            width: 16px;
+            height: 16px;
+            margin: 0 5px;
+            // border: 1px solid #000;
         }
     }
 }
 
-
 .menuWheel {
     border-inline: 1px solid $clr_greyDark;
+    width: 100%;
 
     &__block {
-        padding: 16px 16px;
-        // @extend %main_border;
         border-bottom: 1px solid $clr_greyDark;
+        padding: 10px 0px;
+
+        &:first-child {            
+            .menuWheel__item {                
+                &:first-child {
+                    //border: 4px solid #000;
+                    padding: 0;
+                    
+                    &:hover{
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
 
         .subtitle {
             font-family: 'Manrope', sans-serif;
             font-weight: 800;
+            width: 100%;
+            padding: $pd_components;
             color: $clr_black;
             text-transform: uppercase;
         }
@@ -267,14 +288,14 @@ body {
                 input {
                     margin-left: 8px;
                     width: 50px;
+                    height: 100%;
                     border: 1px solid $clr_greyMiddle;
-                    border-radius: 2px;
+                    border-radius: $bd-radius;
                     padding: 2px 2px 2px 4px;
 
                     &::-webkit-inner-spin-button,
                     &::-webkit-outer-spin-button {
-                        // отображаем стрелки
-                        opacity: 1;
+                        opacity: 1; // отображаем стрелки
                     }
                 }
             }
@@ -307,12 +328,11 @@ body {
         }
     }
 
+
     &__item {
-        //padding: 3px 0;
-        //margin: 12px 0px;
         @extend %ef_default_component;
-        @extend %ef_hover_component;        
-        color: $clr_black; 
+        @extend %ef_hover_component;
+        color: $clr_black;
 
         &:first-child {
             margin-top: 0;
@@ -328,12 +348,27 @@ body {
     font-weight: 700;
 }
 
+.btnSquare {
+    display: table;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+
+    &__content {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    &:hover {
+        background-color: $clr_greyMiddle;
+        border-radius: $bd-radius;
+    }
+}
+
 .btnMain {
-    display: inline-block;
+    display: block;
     text-transform: uppercase;
-    font-weight: 700px;
-    vertical-align: middle;
-    //padding: 3px 4px;    
+    font-weight: 700px;  
     cursor: default;
     font-family: 'Manrope', sans-serif;
     font-weight: 800;
@@ -341,11 +376,13 @@ body {
     color: #5B5B5B;
     transition-duration: 0.5s;
     font-size: 14px;
+    padding: $pd_components;
+    
 
     &:hover {
-        //background-color: $clr_grey;
+        //background-color: $clr_greyMiddle;
         //@include bdInside($clr_greyMiddle, 1px); 
-        //border-radius: 2px;      
+        border-radius: 0px;      
         color: $clr_black;
     }
 
@@ -354,7 +391,7 @@ body {
 
         &::before {
             content: "+";
-            font-size: 14px;
+            font-size: 18px;
             vertical-align: middle;
             margin-right: 5px;
         }
@@ -363,9 +400,10 @@ body {
 
 .coloredCircle {
     background: $clr_pinkLight left no-repeat;
-    height: 16px;
-    width: 16px;
+    height: 18px;
+    width: 18px;
     border-radius: 50%;
+    border-radius: $bd-radius;
 }
 
 .tableSectors {
@@ -373,10 +411,32 @@ body {
     border-collapse: collapse;
     font-size: 14px;
 
+    tr {
+        @extend %ef_default_component;
+        @extend %ef_hover_component;
+        // обводка строки
+        // &:hover {
+        //     @include bdInside($clr_greyMiddle, 1px);
+        //     td{
+
+        //         &:first-child{
+        //             border-left: 1px solid $clr_greyMiddle;
+
+        //         }
+        //         &:last-child{
+        //             border-right: 1px solid $clr_greyMiddle;
+        //         }
+        //     }
+        // }
+    }
+
     td {
-        //border: 1px solid #000;
+        // border-left: 1px solid transparent;
+        // border-right: 1px solid transparent;
         vertical-align: middle;
-        padding: 2px 4px 4px 2px;
+        padding: 4px 0px;
+        //padding: 2px 4px 4px 2px;
+        //border: 1px solid #000;
     }
 
     .input-sector {
@@ -385,33 +445,34 @@ body {
         text-overflow: ellipsis;
         //padding: 1px 3px; // todo
         padding: 2px 4px 2px 4px;
+        padding: 4px 8px;
+        background-color: transparent;
+        cursor: default;
+        border: 1px solid transparent;
+        border-radius: $bd-radius;
 
         // font-family: 'Manrope', sans-serif;
         &:hover {
-            border-radius: 3px;
-            @include bdInside($clr_greyMiddle, 1px);
+            // background-color: $clr_greyMiddle;        
+            // border-radius: $bd-radius;  
+            border: 1px solid $clr_greyMiddle;
+            // @include bdInside($clr_black, 1px);
         }
 
         &:focus {
-            border-radius: 3px;
-            @include bdInside($clr_black, 1px);
+            //border-radius: 3px;
+            //@include bdInside($clr_black, 1px);
+
+            border: 2px solid $clr_accent
         }
     }
 
     // color
     td:first-child {
-        display: block;
-        text-align: center;
-        margin: 5px 4px 5px 0px;
+        //padding: 5px 4px 5px 0px;
         white-space: nowrap;
-
-        &:hover {
-            @include bdInside($clr_greyMiddle, 1px);
-        }
-
-        &:focus {
-            @include bdInside($clr_black, 1px);
-        }
+        padding-left: 16px;
+        padding-right: 8px;
     }
 
     // name
@@ -426,6 +487,7 @@ body {
         text-align: right;
         color: $clr_greyDark;
         white-space: nowrap;
+        padding-left: 8px;
         padding-right: 0;
         width: 100px;
     }
@@ -440,22 +502,9 @@ body {
 
     // btn delete
     td:last-child {
-        text-align: center;
-        height: 16px;
-        width: 16px;
-        //border-radius: 50%;    
-        font-size: 12px;
-        padding: 0px 5px;
         cursor: default;
-
-        &:hover {
-            @include bdInside($clr_greyMiddle, 1px);
-        }
-
-        &:focus {
-            @include bdInside($clr_black, 1px);
-            background-color: $clr_greyMiddle;
-        }
+        padding-left: 12px;
+        padding-right: 6px;
     }
 }
 
@@ -468,45 +517,51 @@ footer {
 input[id^="spoiler"] {
     display: none; // скрываем чекбокс    
 
-    &+label { // заголовок 
+    &+label {
+        // заголовок 
         // @extend %ef_default_component; 
         display: block;
-        width: 100%;  
-        height: 100%; 
-        cursor: pointer;        
-        font-weight: 700;        
-        &::after{            
-            content: "";            
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        font-weight: 700;
+
+        &::after {
+            content: "";
             background: url("../img/ic_arrow_bot.png") no-repeat 50% 50% / 1em 1em;
             width: 1em;
-            height: 1em;  
-            margin-left: 4px;            
+            height: 1em;
+            margin-left: 4px;
             position: absolute;
-            transition: transform .5s; 
+            transition: transform .5s;
         }
     }
-    &:checked+label { // открытый спойлер        
+
+    &:checked+label {
+        // открытый спойлер        
         // @extend %ef_active_component;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
 
-        &+.spoiler { // контент спойлера
+        &+.spoiler {
+            // контент спойлера
             height: auto;
-            //opacity: 1; 
             display: inline-block; // скрываем чекбокс           
         }
-        &::after{            
-            content: "";            
+
+        &::after {
+            content: "";
             background: url("../img/ic_arrow_right.png") no-repeat 50% 50% / 1em 1em;
         }
     }
-    &~.spoiler {                
+
+    &~.spoiler {
         height: 0;
         width: 100%;
         overflow: hidden;
         //opacity: 0; 
-        margin-top: $pd_components;
-        padding-top: $pd_components;
+        margin-top: 10px;
+        padding-top: 10px;
         border-top: 1px solid $clr_greyMiddle;
         display: none; // скрываем       
         // @extend %ef_active_component;          
