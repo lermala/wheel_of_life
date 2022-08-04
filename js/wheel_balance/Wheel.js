@@ -1,7 +1,7 @@
 import { Sector } from './Sector.js'
 
 export class BalanceWheel {
-    name = "fef";
+    name = "balance wheel";
     numberOfSectors; // количество делений или сфер
     maxScore; // максимальный балл сектора / сферы
     sectors;
@@ -13,6 +13,7 @@ export class BalanceWheel {
     // внешний вид
     areTitlesShown;
     areCirclesShown;
+    areLinesShown;
     isColored;
     palette;
 
@@ -20,6 +21,7 @@ export class BalanceWheel {
         // внешний вид
         this.areTitlesShown = options.areTitlesShown || false;
         this.areCirclesShown = options.areCirclesShown || true;
+        this.areLinesShown = options.areLinesShown || true;
         this.isColored = options.isColored || true;
         this.palette = options.palette;
 
@@ -59,10 +61,15 @@ export class BalanceWheel {
 
     addSector(sector) {
         let lastId = -1;
-        if (this.sectors.length > 0) lastId = this.sectors[this.sectors.length - 1].id;
+        let sec_len = this.sectors.length;
+        if (sec_len > 0)
+            lastId = this.sectors[sec_len - 1].id;
         sector.id = lastId + 1;
-        sector.color = this.palette.colors[(lastId + 1) % (this.palette.colors.length)];
+        sector.score = this.maxScore;
+        // sector.color = this.palette.colors[(lastId + 1) % (this.palette.colors.length)];
         this.sectors.push(sector);
+        this.setSectorColor(this.sectors[sec_len], sec_len);
+        
     }
 
     deleteSector(id) {
@@ -89,9 +96,21 @@ export class BalanceWheel {
         this.palette = palette;
         console.log(palette);
         this.sectors.forEach((element, index) => {
-            const colorId = (index) % (palette.colors.length);
-            element.color = palette.colors[colorId];
+            this.setSectorColor(element, index);
         });
+    }
+
+    setSectorColor(element, index) {
+        const palette_len = this.palette.colors.length;
+        const sec_len = this.sectors.length;
+        let colorId = (index) % palette_len;
+        console.log("index=" + index + " sec_len=" + sec_len);
+        // чтобы цвет последнего сектора не совпадал с цветом первого     
+        if (index == palette_len) {
+            colorId = parseInt(palette_len / 2);  // берем центральный цвет палитры, чтобы цвет значительно отличался            
+
+        }
+        element.color = this.palette.colors[colorId];
     }
 
 }

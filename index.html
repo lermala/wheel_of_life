@@ -22,17 +22,19 @@
 
     <div class="content">
         <div class="content__wheel">
-            <div class="canvasContainer">                
-                <canvas id="wheelBalance" width="800px" height="800px"></canvas>    
-            </div>            
+            <div class="canvasContainer">
+                <canvas id="wheelBalance" width="800px" height="800px"></canvas>
+            </div>
         </div>
         <div class="content__menu">
-            <div class="menuWheel">               
+            <div class="menuWheel">
 
                 <div class="menuWheel__block">
-                    <div class="menuWheel__item"><p class="subtitle">Сферы</p></div>
+                    <div class="menuWheel__item">
+                        <p class="subtitle">Сферы</p>
+                    </div>
                     <table class="tableSectors">
-<!--                         <tr>
+                        <!--                         <tr>
                             <td class="sectorInfo__color"></td>
                             <td><input class="input-sector" type="text" name="sectorName" placeholder="Название сектора" ></td>
                             <td>10</td>
@@ -53,24 +55,24 @@
                     </div>
                 </div>
 
-                <div class="menuWheel__block">   
+                <div class="menuWheel__block">
                     <div class="menuWheel__item">
                         <input type="checkbox" name="titles" id="titles">
                         <label for="numbers">Названия сфер</label>
-                    </div>  
+                    </div>
                     <div class="menuWheel__item">
                         <input type="checkbox" name="lines" id="lines">
                         <label for="lines">Отображать контуры</label>
-                    </div>               
+                    </div>
                     <div class="menuWheel__item">
                         <input type="checkbox" checked name="circles" id="circles">
                         <label for="circles">Отображать деления</label>
                     </div>
-                    <div class="menuWheel__item containerMaxScore">                        
+                    <div class="menuWheel__item containerMaxScore">
                         <span>Делений</span>
-                        <input min="1" max="20" type="number" name="maxScore" id="maxScore">                        
+                        <input min="1" max="20" type="number" name="maxScore" id="maxScore">
                     </div>
-                    <div class="menuWheel__item containerVertical">                        
+                    <div class="menuWheel__item containerVertical">
                         <span>Палитра</span>
                         <!-- <select name="slc_palette" id="slc_palette">
                             <option disabled>Выберите палитру</option>
@@ -79,26 +81,37 @@
                         <div class="select">
                             <div class="select__header">
                                 <span class="select__current"></span>
-                                <div class="select__icon"></div>      
-                            </div>          
+                                <div class="select__icon"></div>
+                            </div>
                             <div class="select__body">
                                 <!-- <div value="0" class="select__item"><div class="palette"></div></div>
                                 <div class="select__item"><div class="palette"></div></div> -->
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
 
-                <div class="menuWheel__block">                    
-                    <div class="menuWheel__item btnAction">Примеры и шаблоны</div>
-                    <div class="menuWheel__item btnAction">Инструкция</div>                    
+                <div class="menuWheel__block">
+                    <div class="menuWheel__item">
+                        <input type="checkbox" id="spoiler" />
+                        <label for="spoiler">Как заполнить?</label>
+                        <div class="spoiler">
+                            <p>1. Оцените, на сколько Вы удовлетворены своей жизнью в каждой сфере (не устраивает - 1,
+                                всё отлично - 10).</p>
+                            <p>2. Отметьте эти значения, закрасив колесо кликом мыши.</p>
+                            <p>3. После того, как все сферы заполнены, оцените "круглость" колеса - посмотрите, какие
+                                сферы следует улучшить, чтобы округлить его еще больше.</p>
+                            <p>4. Для каждой сферы поставьте цели для развития. Для конкретизации можете воспользоваться
+                                сервисом SMART-целей.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="menuWheel__block">
-                    <div class="menuWheel__item btnAction">Сохранить как...</div>
-                    <div class="menuWheel__item btnAction">Поделиться</div>
-                    <div class="menuWheel__item btnAction">Распечатать</div>                    
+                    <div id="btnSaveAs" class="menuWheel__item btnAction">Сохранить...</div>
+                    <!-- <div class="menuWheel__item btnAction">Поделиться</div>
+                    <div class="menuWheel__item btnAction">Распечатать</div>                     -->
                 </div>
 
             </div>
@@ -107,7 +120,7 @@
 
     </div>
 
-    
+
 
     <script type="module" src="js/script.js"></script>
 </body>

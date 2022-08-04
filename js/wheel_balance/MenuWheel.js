@@ -51,7 +51,7 @@ export class MenuWheel {
         const inputName = document.createElement('input');
         inputName.type = "text";
         inputName.value = sector.name;
-        inputName.placeholder = "Впишите сферу"; // todo     
+        inputName.placeholder = "Введите название"; // todo     
         // todo check on empty input
         inputName.className = "input-sector";
         tdName.appendChild(inputName);
@@ -122,13 +122,15 @@ export class MenuWheel {
     setParamerers(balanceWheel) {
         const circle_chb = document.querySelector('#circles');
         circle_chb.checked = balanceWheel.areCirclesShown;
+        const lines_inp = document.querySelector('#lines');
+        lines_inp.checked = balanceWheel.areLinesShown;
         const maxScore_inp = document.querySelector('#maxScore');
         maxScore_inp.value = balanceWheel.maxScore;
-        
+
         // setting palette
-        let currentPalette = document.querySelector('.select').querySelector('.select__current');        
-        currentPalette.appendChild(this.createPalette(balanceWheel.palette));        
-        currentPalette.value = balanceWheel.palette.id;         
+        let currentPalette = document.querySelector('.select').querySelector('.select__current');
+        currentPalette.appendChild(this.createPalette(balanceWheel.palette));
+        currentPalette.value = balanceWheel.palette.id;
     }
 
     getParameters(balanceWheel, action) {
@@ -141,6 +143,12 @@ export class MenuWheel {
         const titles_chb = document.querySelector('#titles');
         titles_chb.addEventListener('change', function () {
             balanceWheel.areTitlesShown = titles_chb.checked;
+            action();
+        });
+
+        const lines_inp = document.querySelector('#lines');
+        lines_inp.addEventListener('change', function () {
+            balanceWheel.areLinesShown = lines_inp.checked;
             action();
         });
 
@@ -174,7 +182,7 @@ export class MenuWheel {
 
     drawPalleteList(paletteService, action) {
         const select = document.querySelector('.select');
-        const selectBody = select.querySelector('.select__body');        
+        const selectBody = select.querySelector('.select__body');
 
         for (let i = 0; i < paletteService.palettes.length; i++) {
             var opt = document.createElement('div');
@@ -182,7 +190,7 @@ export class MenuWheel {
             const palleteBlock = this.createPalette(paletteService.palettes[i]);
             opt.appendChild(palleteBlock);
             selectBody.appendChild(opt);
-        }        
+        }
     }
 
     createPalette(palette) {
@@ -203,7 +211,7 @@ export class MenuWheel {
         let selectHeader = document.querySelectorAll('.select__header');
         let selectItem = document.querySelectorAll('.select__item');
 
-        selectHeader.forEach(it => {            
+        selectHeader.forEach(it => {
             it.addEventListener('click', function () {
                 this.parentElement.classList.toggle('is-active');
             });
@@ -219,6 +227,15 @@ export class MenuWheel {
                 console.log(currentPalette.value);
                 action(currentPalette.value);
             });
+        });
+    }
+
+    // Source from:  http://stackoverflow.com/questions/18480474/how-to-save-an-image-from-canvas
+
+    addActionFor(componentId, action){
+        const component = document.getElementById(componentId);
+        component.addEventListener('click', function () {
+            action();
         });
     }
 

@@ -22,8 +22,9 @@ const paletteService = new PaletteService(); // todo
 
 // wheel info
 var balanceWheel = new BalanceWheel({
+    areLinesShown: true, // todo
     palette: paletteService.palettes[2], // todo
-}); // дефолтное колесо
+});
 
 // DRAWING
 export function drawAll() {
@@ -36,6 +37,7 @@ export function drawAll() {
     drawAllSectors();
     if (balanceWheel.areCirclesShown) drawAllWheels();
     if (balanceWheel.areTitlesShown) drawText();
+    if (balanceWheel.areLinesShown) drawLines();
 }
 
 function drawAllSectors() {
@@ -71,7 +73,24 @@ function drawSector(radius, start, color) {
 
     ctx.fillStyle = color;
     ctx.fill();
-    ctx.stroke();
+    // ctx.stroke();
+}
+
+function drawLines() {
+    for (let i = 0; i < balanceWheel.sectors.length; i++) {
+        ctx.beginPath(); // начало нового пути
+        ctx.beginPath(); // начало нового пути
+        // ctx.moveTo(CENTER_X, CENTER_Y);
+        ctx.arc(CENTER_X, CENTER_Y,
+            balanceWheel.maxRadius,
+            i * balanceWheel.sectorDegrees,
+            i * balanceWheel.sectorDegrees + balanceWheel.sectorDegrees,
+            false
+        );
+        ctx.lineTo(CENTER_X, CENTER_Y);
+        // ctx.fill();
+        ctx.stroke();
+    }
 }
 
 function drawText() {
@@ -218,10 +237,9 @@ function previewSectors() {
         }
     });
 
-    // drawAll(); 
-    // drawAllSectors();
     if (balanceWheel.areCirclesShown) drawAllWheels();
     if (balanceWheel.areTitlesShown) drawText();
+    if (balanceWheel.areLinesShown) drawLines();
 }
 
 // возврат к состоянию из массива (очистка превью)
@@ -245,26 +263,44 @@ export function drawMenu() {
     menuWheel.updateData(balanceWheel.sectors);
     menuWheel.drawSectors();
     menuWheel.setParamerers(balanceWheel); // defauul parameters 
-    console.log(paletteService.palettes[0]);
-    // menuWheel.drawPallete(balanceWheel.palette); // todo 
-
-    // menuWheel.getParameters(balanceWheel);
-    menuWheel.getParameters(balanceWheel, () => {
-        // menuWheel.recount();
+    menuWheel.getParameters(balanceWheel, () => {        
         menuWheel.drawSectors();
         menuWheel.updateAllMaxScore(balanceWheel.maxScore);
         updateCanvas();
     });
 
-    // drawAll(); // todo delete
-
     // list
     menuWheel.drawPalleteList(paletteService);
     menuWheel.createSelect((curPaletteId) => changePalette(curPaletteId));
+
+    // actions for other buttons
+    menuWheel.addActionFor("btnSaveAs", () => download(canvas, balanceWheel.name));
 }
 
-function applyPalette() {
+/* Canvas Donwload */
+function download(canvas, filename) {
+    /// create an "off-screen" anchor tag
+    var lnk = document.createElement('a'), e;
 
+    /// the key here is to set the download attribute of the a tag
+    lnk.download = filename;
+
+    /// convert canvas content to data-uri for link. When download
+    /// attribute is set the content pointed to by link will be
+    /// pushed as "download" in HTML5 capable browsers
+    lnk.href = canvas.toDataURL("image/png;base64");
+
+    /// create a "fake" click-event to trigger the download
+    if (document.createEvent) {
+        e = document.createEvent("MouseEvents");
+        e.initMouseEvent("click", true, true, window,
+            0, 0, 0, 0, 0, false, false, false,
+            false, 0, null);
+
+        lnk.dispatchEvent(e);
+    } else if (lnk.fireEvent) {
+        lnk.fireEvent("onclick");
+    }
 }
 
 export function addSector() {

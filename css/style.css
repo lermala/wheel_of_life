@@ -91,6 +91,17 @@ h6 {
   font-weight: 400;
 }
 
+.menuWheel__item {
+  padding: 10px;
+  transition: all 0.6s;
+}
+
+.menuWheel__item:hover {
+  Box-shadow: 0px 1px 0px #8d9496, 0px -1px 0px #8d9496, 1px 0px 0px #8d9496, -1px 0px 0px #8d9496;
+  background: #f3f3f3;
+  border-radius: 3px;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -274,7 +285,7 @@ body {
   margin-right: 6px;
 }
 .menuWheel__item {
-  margin: 12px 0px;
+  color: #19191c;
 }
 .menuWheel__item:first-child {
   margin-top: 0;
@@ -285,9 +296,6 @@ body {
 
 .btnAction {
   font-weight: 700;
-}
-.btnAction:hover {
-  background-color: #bdc2c4;
 }
 
 .btnMain {
@@ -395,4 +403,48 @@ body {
 footer {
   /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
   flex: 0 0 auto;
+}
+
+input[id^=spoiler] {
+  display: none;
+}
+input[id^=spoiler] + label {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  font-weight: 700;
+}
+input[id^=spoiler] + label::after {
+  content: "";
+  background: url("../img/ic_arrow_bot.png") no-repeat 50% 50%/1em 1em;
+  width: 1em;
+  height: 1em;
+  margin-left: 4px;
+  position: absolute;
+  transition: transform 0.5s;
+}
+input[id^=spoiler]:checked + label {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+input[id^=spoiler]:checked + label + .spoiler {
+  height: auto;
+  display: inline-block;
+}
+input[id^=spoiler]:checked + label::after {
+  content: "";
+  background: url("../img/ic_arrow_right.png") no-repeat 50% 50%/1em 1em;
+}
+input[id^=spoiler] ~ .spoiler {
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #bdc2c4;
+  display: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  transition: all 0.6s;
 }

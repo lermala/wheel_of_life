@@ -19,19 +19,51 @@ $clr_components-hover: $clr_blue;
 
 // margin
 $mg_main: 10%;
+$pd_components: 10px;
+
+$bd-radius: 3px;
+
+@mixin bdInside($clr, $width) {
+    Box-shadow: 0px $width 0px $clr,
+        0px 0-$width 0px $clr,
+        $width 0px 0px $clr,
+        0-$width 0px 0px $clr;    
+}
+@mixin bdInsideCustom($clr, $top, $right, $bot, $left) {
+    Box-shadow: 0px $top 0px $clr,
+        0px 0-$right 0px $clr,
+        $bot 0px 0px $clr,
+        0-$left 0px 0px $clr;    
+}
+
+// effects
+%ef_default_component {
+    padding: $pd_components;
+    //@include bdInside($clr_grey, 1px);
+    //border-radius: $bd-radius;
+    transition: all .6s;    
+}
+%ef_hover_component {
+    // padding: $pd_components;
+    // transition: all .6s;
+    &:hover{
+        @include bdInside($clr_greyDark, 1px);
+        background: $clr_grey;
+        border-radius: $bd-radius;
+    }
+}
+%ef_active_component {
+    @include bdInside($clr_accent, 2px);
+    border-radius: $bd-radius;
+    background: white;
+}
 
 %main_border {
     border: 1px solid #000;
     border-radius: 4px;
 }
 
-@mixin bdInside($clr, $width) {
-    Box-shadow: 0px $width 0px $clr,
-        0px 0-$width 0px $clr,
-        $width 0px 0px $clr,
-        0-$width 0px 0px $clr;
-    // Box-shadow:0px $width 0px #f00,0px 0-$width 0px #f00,1px 0px 0px #f00,-1px 0px 0px #f00;
-}
+
 
 * {
     padding: 0;
@@ -111,54 +143,58 @@ body {
     }
 }
 
-.palette {        
-    display: flex;    
-    height: 16px;    
+.palette {
+    display: flex;
+    height: 16px;
     direction: row;
     // border: 1px solid #000;
-    
+
     &__color {
         $bd-radius: 4px;
-        flex: 1 0 auto;             
-        height: 100%;        
-        &:first-child{                        
-            border-top-left-radius: $bd-radius;            
+        flex: 1 0 auto;
+        height: 100%;
+
+        &:first-child {
+            border-top-left-radius: $bd-radius;
             border-bottom-left-radius: $bd-radius;
         }
-        &:last-child{                        
-            border-top-right-radius: $bd-radius;            
+
+        &:last-child {
+            border-top-right-radius: $bd-radius;
             border-bottom-right-radius: $bd-radius;
         }
     }
 
-    &:hover{
+    &:hover {
         // @include bdInside($clr_greyDark, 1px);
         // border-radius: 4px;
     }
 }
 
 .select {
-    font-size: 14px;    
+    font-size: 14px;
     position: relative;
-    
+
     &__header {
         display: flex;
         //border: 1px solid $clr_greyMiddle;           
-        
-        height: 16px + 4px*2;
-        @include bdInside($clr_greyMiddle, 1px); 
 
-        &:hover{
+        height: 16px + 4px*2;
+        @include bdInside($clr_greyMiddle, 1px);
+
+        &:hover {
             // border: 1px solid $clr_greyMiddle;   
-            @include bdInside($clr_greyMiddle, 1px); 
+            @include bdInside($clr_greyMiddle, 1px);
         }
     }
+
     .is-active &__body {
         display: block;
     }
-    &__current {       
+
+    &__current {
         width: 100%;
-        height: 100%;   
+        height: 100%;
         padding: 4px;
     }
 
@@ -172,7 +208,7 @@ body {
         justify-content: flex-end;
         flex-shrink: 0;
         color: $clr_black;
-        border-left: 1px solid $clr_greyMiddle;        
+        border-left: 1px solid $clr_greyMiddle;
     }
 
     &__body {
@@ -180,15 +216,16 @@ body {
         left: 0;
         right: 0;
         top: 100%;
-        @include bdInside($clr_greyMiddle, 1px); 
+        @include bdInside($clr_greyMiddle, 1px);
         // border-top: 0;
         display: none; // невидим по умолчанию
     }
+
     &__item {
         padding: 6px 4px+26px 4px 4px;
         background-color: white;
 
-        &:hover{
+        &:hover {
             background-color: $clr_grey;
         }
     }
@@ -241,24 +278,27 @@ body {
                     }
                 }
             }
-            .containerVertical {                
+
+            .containerVertical {
                 display: flex;
                 flex-direction: column; // todo
-                span{
+
+                span {
                     margin-bottom: 6px;
                 }
             }
-            .containerHorizontal {                
+
+            .containerHorizontal {
                 // width: 100%;
                 display: flex;
                 flex-direction: row; // todo 
                 // flex-wrap: nowrap;             
-                
+
                 div {
                     flex: 1 0 auto;
                 }
 
-                span{
+                span {
                     // display: inline-block;
                     margin: auto 0;
                     margin-right: 6px;
@@ -269,7 +309,10 @@ body {
 
     &__item {
         //padding: 3px 0;
-        margin: 12px 0px;
+        //margin: 12px 0px;
+        @extend %ef_default_component;
+        @extend %ef_hover_component;        
+        color: $clr_black; 
 
         &:first-child {
             margin-top: 0;
@@ -278,17 +321,11 @@ body {
         &:last-child {
             margin-bottom: 0;
         }
-
-
     }
 }
 
 .btnAction {
     font-weight: 700;
-
-    &:hover {
-        background-color: $clr_greyMiddle;
-    }
 }
 
 .btnMain {
@@ -322,8 +359,6 @@ body {
             margin-right: 5px;
         }
     }
-
-
 }
 
 .coloredCircle {
@@ -427,4 +462,56 @@ body {
 footer {
     /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
     flex: 0 0 auto;
+}
+
+
+input[id^="spoiler"] {
+    display: none; // скрываем чекбокс    
+
+    &+label { // заголовок 
+        // @extend %ef_default_component; 
+        display: block;
+        width: 100%;  
+        height: 100%; 
+        cursor: pointer;        
+        font-weight: 700;        
+        &::after{            
+            content: "";            
+            background: url("../img/ic_arrow_bot.png") no-repeat 50% 50% / 1em 1em;
+            width: 1em;
+            height: 1em;  
+            margin-left: 4px;            
+            position: absolute;
+            transition: transform .5s; 
+        }
+    }
+    &:checked+label { // открытый спойлер        
+        // @extend %ef_active_component;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        &+.spoiler { // контент спойлера
+            height: auto;
+            //opacity: 1; 
+            display: inline-block; // скрываем чекбокс           
+        }
+        &::after{            
+            content: "";            
+            background: url("../img/ic_arrow_right.png") no-repeat 50% 50% / 1em 1em;
+        }
+    }
+    &~.spoiler {                
+        height: 0;
+        width: 100%;
+        overflow: hidden;
+        //opacity: 0; 
+        margin-top: $pd_components;
+        padding-top: $pd_components;
+        border-top: 1px solid $clr_greyMiddle;
+        display: none; // скрываем       
+        // @extend %ef_active_component;          
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        transition: all .6s;
+    }
 }
